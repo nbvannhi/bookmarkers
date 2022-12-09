@@ -13,11 +13,11 @@ CREATE TABLE authors (
 
 CREATE TABLE books (
   book_id SERIAL,
-  isbn VARCHAR(13) UNIQUE NOT NULL,
+  isbn13 VARCHAR(13) UNIQUE NOT NULL,
   title VARCHAR(50) NOT NULL,  
   edition VARCHAR(10) NULL,
   publisher_id INTEGER NOT NULL,
-  published_date DATE NOT NULL,
+  publication_date DATE NOT NULL,
   PRIMARY KEY(book_id),
   CONSTRAINT fk_publisher
     FOREIGN KEY(publisher_id)
