@@ -24,9 +24,10 @@ CREATE TABLE books (
 
 CREATE TABLE series (
   series_id SERIAL PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
   length INTEGER NOT NULL,
   status VARCHAR(8),
-  CHECK (status IN ('on_going', 'complete'))
+  CHECK (status IN ('ongoing', 'complete'))
 );
 
 CREATE TABLE book_series (
