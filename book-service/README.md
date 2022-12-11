@@ -1,46 +1,54 @@
 # Book Service
 
-## Getting Started
-
-### `.env` File
+## `.env` File
 
 Download `book-service.env` file from [here](https://drive.google.com/drive/folders/1qzkw99cqAQebqCf2l7eVWQsuqJ2xvb1J?usp=share_link), rename it to `.env` and place it inside `book-service/`.
 
-### Setting up the Database
+## Setting up MySQL
 
-1. Install MySQL. You can verify it with:
+Install MySQL. You can verify it using:
 ```
 $ mysql -V
 ```
 
-2. Create a new user with username and password as specified in `book-service.env`.
+Create a new user with username and password as specified in `book-service.env`.
 
-3. Connect to MySQL:
+Connect to MySQL using:
 ```
 $ mysql -u username -p
 Enter password: password
 ```
 where `username` and `password` are specified in `book-service.env`.
 
-4. Populate the database:
+Populate the database using:
 ```
 mysql> source directory_to_schema.sql
 mysql> source directory_to_data.sql
 ```
 
-### Running the Server
+## Running Book Service
 
-1. Change directory to `book-service`:
+Change directory to `book-service/` using:
 ```
-$ cd book-service
+$ cd directory_to_book-service/
 ```
 
-2. Install npm packages:
+Install npm packages using:
 ```
 $ npm i
 ```
 
-3. Run the server:
+Run the server using:
 ```
-npm run dev
+$ npm run dev
+```
+
+The terminal should show something like this:
+```
+[nodemon] 2.0.20
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,json
+[nodemon] starting `node server.js`
+book-service listening on port 8000
 ```
