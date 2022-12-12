@@ -1,28 +1,32 @@
-import React, { useEffect, useState } from 'react'
+import { 
+  createBrowserRouter,
+  RouterProvider
+} from "react-router-dom"
+import SignUp from "./user-auth/SignUp"
+import SignIn from "./user-auth/SignIn"
+import "./style.scss"
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <div> This is Home! </div>,
+  },
+  {
+    path: "/signup",
+    element: <SignUp/>,
+  },
+  {
+    path: "/signin",
+    element: <SignIn/>,
+  },
+]);
 
 function App() {
-
-  const [data, setData] = useState([{}])
-
-  useEffect(() => {
-    fetch('/api').then(
-      res => res.json()
-    ).then(
-      data => setData(data)
-    )
-  }, [])
-
   return (
-    <div>
-
-      {(typeof data.users === 'undefined') ? (
-        <p>Loading...</p>
-      ): (
-        data.users.map((user, i) => (
-          <p key={i}>{user}</p>
-        ))
-      )}
-
+    <div className="app">
+      <div className="container">
+        <RouterProvider router={router}/>
+      </div>
     </div>
   )
 }
