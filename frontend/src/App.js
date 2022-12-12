@@ -6,10 +6,10 @@ import {
 import Books from './pages/books.js'
 import './style.css'
 
-function App() {
+function app() {
 
   return (
-    <div className='App'>
+    <div className='app'>
       <BrowserRouter>
         <Routes>
           <Route path='/books' element={<Books/>}/>
@@ -19,4 +19,4 @@ function App() {
   )
 }
 
-export default App
+export default app

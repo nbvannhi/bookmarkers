@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { URL_BOOK_SVC } from '../configs.js'
+import ResponsiveAppBar from '../components/app-bar.js'
 import Box from '@mui/material/Box'
 import ImageList from '@mui/material/ImageList'
 import ImageListItem from '@mui/material/ImageListItem'
@@ -21,8 +22,10 @@ const Books = () => {
   }, [])
 
   return (
-    <Box sx={{ width: 1080, height: 1080, overflowY: 'scroll' }}>
-      <ImageList variant="masonry" cols={3} gap={8}>
+    <Box sx={{ width: 1920, height: 1080 }}>
+    <ResponsiveAppBar/>
+    <Box sx={{ paddingTop: 10, paddingX: 50, overflowY: 'scroll' }}>
+      <ImageList variant="masonry" cols={4} gap={10}>
         {books.map((book) => (
           <ImageListItem key={book.cover}>
             <img
@@ -34,6 +37,7 @@ const Books = () => {
           </ImageListItem>
         ))}
       </ImageList>
+    </Box>
     </Box>
   )
 }

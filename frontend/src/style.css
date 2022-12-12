@@ -1,27 +1,10 @@
-.App {
-  height: 100vh;
-  padding: 50px 50px;
+.app {
+  /* height: 100vh;
+  padding: 50px 50px; */
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  overflow: hidden;
-}
-
-.books {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.book {
-  flex: 1;
-  flex-direction: column;
-}
-
-img {
-  width: 200px;
-  height: 300px;
-  object-fit: cover;
   background-color: white;
 }
 
