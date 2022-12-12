@@ -1,14 +1,18 @@
 import express from 'express'
-import { getPublishers, getPublisher, createPublisher } from './database.js'
+import cors from 'cors'
+import {
+  getPublishers, getPublisher, createPublisher,
+  getBooks
+} from './database.js'
 
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 
 app.get('/publishers', async (req, res) => {
   const publishers = await getPublishers()
-  res.send(publishers)
-  // res.json({"users": ["userOne", "userTwo", "userThree", "userFour"]})
+  res.json(publishers)
 })
 
 app.get('/publishers/:publisher_id', async (req, res) => {
@@ -21,6 +25,11 @@ app.post('/publishers', async (req, res) => {
   const { name } = req.body
   const publisher = await createPublisher(name)
   res.status(201).send(publisher)
+})
+
+app.get('/books', async (req, res) => {
+  const books = await getBooks()
+  res.json(books)
 })
 
 app.listen(8000, () => {

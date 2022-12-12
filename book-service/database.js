@@ -31,3 +31,8 @@ export async function createPublisher(name) {
   const id = result.insertId
   return getPublisher(id)
 }
+
+export async function getBooks() {
+  const [result] = await pool.query(`SELECT * FROM books`)
+  return result
+}

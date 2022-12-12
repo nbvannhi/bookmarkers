@@ -1,28 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from 'react-router-dom'
+import Books from './pages/books.js'
+import './style.css'
 
 function App() {
 
-  const [data, setData] = useState([{}])
-
-  useEffect(() => {
-    fetch('/api').then(
-      res => res.json()
-    ).then(
-      data => setData(data)
-    )
-  }, [])
-
   return (
-    <div>
-
-      {(typeof data.users === 'undefined') ? (
-        <p>Loading...</p>
-      ): (
-        data.users.map((user, i) => (
-          <p key={i}>{user}</p>
-        ))
-      )}
-
+    <div className='App'>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/books' element={<Books/>}/>
+        </Routes>
+      </BrowserRouter>
     </div>
   )
 }
