@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { URL_BOOK_SVC } from '../configs.js'
+import Box from '@mui/material/Box'
+import ImageList from '@mui/material/ImageList'
+import ImageListItem from '@mui/material/ImageListItem'
 
-const ViewAllBooks = () => {
-
+const Books = () => {
   const [books, setBooks] = useState([])
 
   useEffect(() => {
@@ -16,22 +18,24 @@ const ViewAllBooks = () => {
       }
     }
     fetchBooks()
-  }, []);
+  }, [])
 
   return (
-    <div>
-      <h1>Booksmarkers Resources</h1>
-      <div className='books'>
-        {books.map(book => (
-          <div className='book' key={book.book_id}>
-            {book.cover && book.title && <img src={book.cover} alt={book.title} />}
-            <p>{book.title}</p>
-            <p>{book.isbn13}</p>
-          </div>
+    <Box sx={{ width: 1080, height: 1080, overflowY: 'scroll' }}>
+      <ImageList variant="masonry" cols={3} gap={8}>
+        {books.map((book) => (
+          <ImageListItem key={book.cover}>
+            <img
+              src={`${book.cover}?w=248&fit=crop&auto=format`}
+              srcSet={`${book.cover}?w=248&fit=crop&auto=format&dpr=2 2x`}
+              alt={book.title}
+              loading="lazy"
+            />
+          </ImageListItem>
         ))}
-      </div>
-    </div >
+      </ImageList>
+    </Box>
   )
 }
 
-export default ViewAllBooks
+export default Books
