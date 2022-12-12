@@ -19,6 +19,7 @@ CREATE TABLE books (
   edition VARCHAR(10) NULL,
   publisher_id BIGINT UNSIGNED NOT NULL,
   publication_date DATE NOT NULL,
+  cover VARCHAR(2083) NULL,
   FOREIGN KEY(publisher_id) REFERENCES publishers(publisher_id)
 );
 
