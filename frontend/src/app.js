@@ -6,17 +6,17 @@ import {
 import ViewAllBooks from './pages/view-all-books.js'
 import './style.css'
 
-function app() {
+function App() {
 
   return (
     <div className='app'>
       <BrowserRouter>
         <Routes>
-          <Route path='/book/all' element={<ViewAllBooks/>}/>
+          <Route path='/books' element={<ViewAllBooks/>}/>
         </Routes>
       </BrowserRouter>
     </div>
   )
 }
 
-export default app
+export default App
