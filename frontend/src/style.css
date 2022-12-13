@@ -1,11 +1,13 @@
+body {
+  background-color: #191A1C;
+}
+
 .app {
-  /* height: 100vh;
-  padding: 50px 50px; */
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-color: white;
+  background-color: #191A1C;
 }
 
 /* hide scrollbar but allow scrolling */
