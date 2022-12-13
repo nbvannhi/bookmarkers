@@ -42,6 +42,6 @@ export async function getBook(id) {
   SELECT *
   FROM books
   WHERE book_id = ?
-  `)
+  `, [id])
   return result
 }
