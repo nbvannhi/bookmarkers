@@ -27,7 +27,7 @@ app.post('/publishers', async (req, res) => {
   res.status(201).send(publisher)
 })
 
-app.get('/books', async (req, res) => {
+app.get('/book/all', async (req, res) => {
   const books = await getBooks()
   res.json(books)
 })

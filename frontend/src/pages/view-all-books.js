@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { URL_BOOK_SVC } from '../configs.js'
+import { URL_VIEW_ALL_BOOK } from '../configs.js'
 import ResponsiveAppBar from '../components/app-bar.js'
 import Box from '@mui/material/Box'
 import ImageList from '@mui/material/ImageList'
@@ -12,7 +12,7 @@ const Books = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const res = await axios.get(URL_BOOK_SVC)
+        const res = await axios.get(URL_VIEW_ALL_BOOK)
         setBooks(res.data)
       } catch (err) {
         console.log(err)

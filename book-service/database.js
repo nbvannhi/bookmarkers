@@ -36,3 +36,12 @@ export async function getBooks() {
   const [result] = await pool.query(`SELECT * FROM books`)
   return result
 }
+
+export async function getBook(id) {
+  const [result] = await pool.query(`
+  SELECT *
+  FROM books
+  WHERE book_id = ?
+  `)
+  return result
+}
