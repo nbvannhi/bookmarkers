@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { URL_VIEW_ALL_BOOK } from '../configs.js'
-import ResponsiveAppBar from '../components/app-bar.js'
+import NavBar from '../components/nav-bar.js'
 import Box from '@mui/material/Box'
 import ImageList from '@mui/material/ImageList'
 import ImageListItem from '@mui/material/ImageListItem'
 
-const Books = () => {
+const ViewAllBook = () => {
   const [books, setBooks] = useState([])
 
   useEffect(() => {
@@ -23,8 +23,8 @@ const Books = () => {
 
   return (
     <Box sx={{ width: 1920, height: 1080 }}>
-    <ResponsiveAppBar/>
-    <Box sx={{ paddingTop: 10, paddingX: 50, overflowY: 'scroll' }}>
+    <NavBar/>
+    <Box sx={{ paddingTop: 5, paddingX: 0, overflowY: 'scroll' }}>
       <ImageList variant="masonry" cols={4} gap={10}>
         {books.map((book) => (
           <ImageListItem key={book.cover}>
@@ -42,4 +42,4 @@ const Books = () => {
   )
 }
 
-export default Books
+export default ViewAllBook

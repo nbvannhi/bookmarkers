@@ -13,10 +13,10 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 
-const pages = ['Collection', 'Menu2', 'Menu3'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Collection', 'Menu2', 'Menu3']
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
-function ResponsiveAppBar() {
+function NavBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -35,7 +35,7 @@ function ResponsiveAppBar() {
   }
 
   return (
-    <AppBar position="fixed">
+    <AppBar position="fixed" style={{ background: 'black' }} elevation={0}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -43,7 +43,7 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            href="/books"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -158,4 +158,4 @@ function ResponsiveAppBar() {
     </AppBar>
   );
 }
-export default ResponsiveAppBar
+export default NavBar
