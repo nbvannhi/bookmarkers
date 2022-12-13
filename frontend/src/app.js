@@ -3,7 +3,7 @@ import {
   Routes,
   Route
 } from 'react-router-dom'
-import Books from './pages/books.js'
+import ViewAllBooks from './pages/view-all-books.js'
 import './style.css'
 
 function app() {
@@ -12,7 +12,7 @@ function app() {
     <div className='app'>
       <BrowserRouter>
         <Routes>
-          <Route path='/books' element={<Books/>}/>
+          <Route path='/book/all' element={<ViewAllBooks/>}/>
         </Routes>
       </BrowserRouter>
     </div>
