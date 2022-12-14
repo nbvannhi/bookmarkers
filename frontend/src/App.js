@@ -1,34 +1,23 @@
-import { 
-  createBrowserRouter,
-  RouterProvider
-} from "react-router-dom"
-import SignUp from "./user-auth/SignUp"
-import SignIn from "./user-auth/SignIn"
-import "./style.scss"
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <div> This is Home! </div>,
-  },
-  {
-    path: "/signup",
-    element: <SignUp/>,
-  },
-  {
-    path: "/signin",
-    element: <SignIn/>,
-  },
-]);
+import SignUp from './pages/sign-up';
+import SignIn from './pages/sign-in';
+import User from './pages/user';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
+  const isSignedIn = useSelector((state) => state.isSignedIn);
   return (
-    <div className="app">
-      <div className="container">
-        <RouterProvider router={router}/>
-      </div>
-    </div>
-  )
+    <React.Fragment>
+      <main>
+        <Routes>
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          {isSignedIn && <Route path="/user" element={<User />} />}{' '}
+        </Routes>
+      </main>
+    </React.Fragment>
+  );
 }
 
-export default App
+export default App;
