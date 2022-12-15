@@ -1,5 +1,5 @@
 body {
-  background-color: #191A1C;
+  background-color: #EDF1F5;
 }
 
 .app {
@@ -7,7 +7,7 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-color: #191A1C;
+  background-color: #EDF1F5;
 }
 
 /* hide scrollbar but allow scrolling */

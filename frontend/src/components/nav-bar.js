@@ -35,7 +35,7 @@ function NavBar() {
   }
 
   return (
-    <AppBar position="fixed" style={{ background: 'black' }} elevation={0}>
+    <AppBar position="fixed" style={{ background: '#0A1625' }} elevation={0}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />

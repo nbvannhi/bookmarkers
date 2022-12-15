@@ -22,10 +22,10 @@ const ViewAllBook = () => {
   }, [])
 
   return (
-    <Box sx={{ width: 1920, height: 1080 }}>
+    <Box sx={{ width: 1080, height: 1080 }}>
     <NavBar/>
-    <Box sx={{ paddingTop: 5, paddingX: 0, overflowY: 'scroll' }}>
-      <ImageList variant="masonry" cols={4} gap={10}>
+    <Box sx={{ paddingTop: 10, paddingX: 0, overflowY: 'scroll' }}>
+      <ImageList variant="masonry" cols={5} gap={10}>
         {books.map((book) => (
           <ImageListItem key={book.cover}>
             <img
