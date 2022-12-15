@@ -70,7 +70,7 @@ const signIn = async (req, res, next) => {
             httpOnly: true,
             sameSite: 'lax',
         }
-    )
+    );
 
     return res.status(200).json({ message: 'Successfully signed in.', user: existingUser, token });
 };
