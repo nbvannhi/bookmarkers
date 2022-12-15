@@ -1,18 +1,18 @@
-import mysql from 'mysql2'
-import dotenv from 'dotenv'
+import mysql from 'mysql2';
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 const pool = mysql.createPool({
   host: process.env.MYSQL_HOST,
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DATABASE
-}).promise()
+}).promise();
 
 export async function getPublishers() {
   const [result] = await pool.query("SELECT * FROM publishers")
-  return result;
+  return result
 }
 
 export async function getPublisher(id) {

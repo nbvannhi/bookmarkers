@@ -1,9 +1,9 @@
-import express from 'express'
-import cors from 'cors'
+import express from 'express';
+import cors from 'cors';
 import {
   getPublishers, getPublisher, createPublisher,
   getBooks, getBook
-} from './database.js'
+} from './database.js';
 
 const app = express()
 

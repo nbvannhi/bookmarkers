@@ -17,7 +17,7 @@ const ViewBook = () => {
         const res = await axios.get(`${URL_VIEW_ALL_BOOK}/${id}`);
         setBook(res.data[0]);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     }
     fetchBook(book_id);
