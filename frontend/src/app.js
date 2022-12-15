@@ -3,9 +3,9 @@ import {
   Routes,
   Route
 } from 'react-router-dom';
-import NavBar from './components/nav-bar.js';
-import ViewAllBooks from './pages/view-all-books.js';
-import ViewBook from './pages/view-book.js';
+import NavBar from './components/nav-bar.jsx';
+import ViewAllBooks from './pages/view-all-books.jsx';
+import ViewBook from './pages/view-book.jsx';
 import './style.css';
 
 function App() {
