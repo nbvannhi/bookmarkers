@@ -25,7 +25,7 @@ function SignOutButton() {
     const handleSignOut = () => {
         sendSignOutRequest()
             .then(() => dispatch(authActions.signOut()))
-            .then(() => localStorage.setItem('isSignedIn', false))
+            .then(() => localStorage.setItem('userId', null))
             .then(() => history('/signin'));
     };
 

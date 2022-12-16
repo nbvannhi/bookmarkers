@@ -103,8 +103,42 @@ const getUser = async (req, res, next) => {
     if (!user) {
         return res.status(404).json({ message: 'User not found.' });
     }
+
     return res.status(200).json({ user });
 };
+
+const getUserById = async (req, res, next) => {
+    const userId = req.params.id;
+
+    let user;
+    try {
+        user = await User.findById(userId, '-password');
+    } catch (err) {
+        return new Error(error);
+    }
+    if (!user) {
+        return res.status(404).json({ message: 'User not found.' });
+    }
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '35s' });
+
+    if (req.cookies[`${user._id}`]) {
+        req.cookies[`${user._id}`] = '';
+    }
+
+    res.cookie(
+        String(user._id),
+        token,
+        {
+            path: '/',
+            expires: new Date(Date.now() + 1000 * 30),
+            httpOnly: true,
+            sameSite: 'lax',
+        }
+    );
+
+    return res.status(200).json({ user });
+}
 
 const refreshToken = (req, res, next) => {
     const cookies = req.headers.cookie;
@@ -163,5 +197,6 @@ exports.signUp = signUp;
 exports.signIn = signIn;
 exports.verifyToken = verifyToken;
 exports.getUser = getUser;
+exports.getUserById = getUserById;
 exports.refreshToken = refreshToken;
 exports.signOut = signOut;

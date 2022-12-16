@@ -15,9 +15,17 @@ function User() {
         return data;
     }
     const sendRequest = async () => {
-        const res = await axios.get('http://localhost:5000/api/user', {
-            withCredentials: true,
-        }).catch((err) => console.log(err.response));
+        let res;
+        try {
+            res = await axios.get('http://localhost:5000/api/user', {
+                withCredentials: true,
+            });
+        } catch (err) {
+            const encryptedId = localStorage.getItem('userId');
+            res = await axios.get(`http://localhost:5000/api/user/${encryptedId}`, {
+                withCredentials: true,
+            }).catch((err) => console.log(err));
+        }
         const data = await res.data;
         return data;
     };

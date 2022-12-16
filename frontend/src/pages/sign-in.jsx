@@ -1,9 +1,9 @@
+import { authActions } from '../store';
 import axios from 'axios';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { authActions } from '../store';
 
 function SignIn() {
     const dispatch = useDispatch();
@@ -26,6 +26,8 @@ function SignIn() {
             password: inputs.password,
         }).catch((err) => console.log(err.response));
         const data = await res.data;
+        const userId = data.user._id;
+        localStorage.setItem('userId', String(userId));
         return data;
     };
 
@@ -33,7 +35,6 @@ function SignIn() {
         e.preventDefault();
         sendRequest()
             .then(() => dispatch(authActions.signIn()))
-            .then(() => localStorage.setItem('isSignedIn', true))
             .then(() => history('/user'));
     };
 

@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
-  const isSignedIn = useSelector((state) => state.isSignedIn) || localStorage.getItem('isSignedIn');
+  const isSignedIn = useSelector((state) => state.isSignedIn) || localStorage.getItem('userId') != null;
   return (
     <React.Fragment>
       <main>
