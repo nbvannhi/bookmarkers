@@ -33,6 +33,7 @@ function SignIn() {
         e.preventDefault();
         sendRequest()
             .then(() => dispatch(authActions.signIn()))
+            .then(() => localStorage.setItem('isSignedIn', true))
             .then(() => history('/user'));
     };
 
