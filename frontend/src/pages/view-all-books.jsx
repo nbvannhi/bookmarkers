@@ -7,6 +7,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 
 const ViewAllBook = () => {
   const [books, setBooks] = useState([]);
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -23,19 +24,19 @@ const ViewAllBook = () => {
   return (
     <Box sx={{ width: 1080, height: 1080 }}>
       <Box sx={{ paddingY: 10, overflowY: 'scroll' }}>
-        <ImageList variant="masonry" cols={5} gap={10}>
+        <ImageList variant='masonry' cols={5} gap={10}>
           {books.map((book) => (
-            <ImageListItem key={book.cover} href={`books/${book.book_id}`}>
-              <a href={`books/${book.book_id}`}>
+            <a href={`books/${book.book_id}`} width='flex'>
+              <ImageListItem key={book.cover} href={`books/${book.book_id}`}>
                 <img
                   src={`${book.cover}?w=248&fit=crop&auto=format`}
                   srcSet={`${book.cover}?w=248&fit=crop&auto=format&dpr=2 2x`}
                   alt={book.title}
-                  loading="lazy"
-                >                  
+                  loading='lazy'
+                >
                 </img>
-              </a>
-            </ImageListItem>
+              </ImageListItem>
+            </a>
           ))}
         </ImageList>
       </Box>
