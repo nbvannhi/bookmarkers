@@ -23,7 +23,7 @@ The terminal should show:
 ```
 [nodemon] restarting due to changes...
 [nodemon] starting `node server.js`
-Database is connected
+user-service listening on port 5000
 ```
 
 ## Testing User Service

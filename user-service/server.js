@@ -16,6 +16,6 @@ mongoose.set('strictQuery', true);
 mongoose.connect(`mongodb+srv://admin:${process.env.MONGODB_PASSWORD}@cluster0.zfdlc1j.mongodb.net/bookmarkers-users?retryWrites=true&w=majority`)
     .then(() => {
         server.listen(5000);
-        console.log('Database is connected');
+        console.log('user-service listening on port 5000');
     })
     .catch((err) => console.log(err));
