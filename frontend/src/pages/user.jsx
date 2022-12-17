@@ -21,8 +21,8 @@ function User() {
                 withCredentials: true,
             });
         } catch (err) {
-            const encryptedId = localStorage.getItem('userId');
-            res = await axios.get(`http://localhost:5000/api/user/${encryptedId}`, {
+            const userId = localStorage.getItem('userId');
+            res = await axios.get(`http://localhost:5000/api/user/${userId}`, {
                 withCredentials: true,
             }).catch((err) => console.log(err));
         }
