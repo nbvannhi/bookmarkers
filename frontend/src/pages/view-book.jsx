@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { URL_VIEW_ALL_BOOK } from '../configs.js';
+import { URL_BOOK_SVC } from '../configs.js';
 import Box from '@mui/material/Box';
 import ImageListItem from '@mui/material/ImageListItem';
 import Typography from '@mui/material/Typography';
@@ -14,7 +14,7 @@ const ViewBook = () => {
   useEffect(() => {
     const fetchBook = async (id) => {
       try {
-        const res = await axios.get(`${URL_VIEW_ALL_BOOK}/${id}`);
+        const res = await axios.get(`${URL_BOOK_SVC}/${id}`);
         setBook(res.data[0]);
       } catch (err) {
         console.log(err);
