@@ -11,37 +11,37 @@ const pool = mysql.createPool({
 }).promise();
 
 export async function getPublishers() {
-  const [result] = await pool.query("SELECT * FROM publishers")
-  return result
+  const [publishers] = await pool.query("SELECT * FROM publishers");
+  return publishers;
 }
 
 export async function getPublisher(id) {
-  const [result] = await pool.query(`
+  const [publisher] = await pool.query(`
   SELECT *
   FROM publishers
   WHERE publisher_id = ?
-  `, [id])
-  return result
+  `, [id]);
+  return publisher;
 }
 
 export async function createPublisher(name) {
-  const [result] = await pool.query(`
+  const [publisher] = await pool.query(`
   INSERT INTO publishers (name) VALUES (?)
   `, [name])
-  const id = result.insertId
-  return getPublisher(id)
+  const id = publisher.insertId;
+  return getPublisher(id);
 }
 
 export async function getBooks() {
-  const [result] = await pool.query(`SELECT * FROM books`)
-  return result
+  const [books] = await pool.query(`SELECT * FROM books`);
+  return books;
 }
 
 export async function getBook(id) {
-  const [result] = await pool.query(`
+  const [book] = await pool.query(`
   SELECT *
   FROM books
   WHERE book_id = ?
-  `, [id])
-  return result
+  `, [id]);
+  return book;
 }
