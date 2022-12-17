@@ -26,6 +26,7 @@ const ViewBook = () => {
   return (
     <Box
       sx={{
+        maxWidth: 500,
         paddingY: 10,
         alignContent: 'center',
         align: 'center',
