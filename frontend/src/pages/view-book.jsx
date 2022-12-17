@@ -28,7 +28,9 @@ const ViewBook = () => {
       sx={{
         paddingY: 10,
         alignContent: 'center',
-        align: 'center'
+        align: 'center',
+        display: 'flex',
+        flexDirection: 'column'
       }}
     >
       <ImageListItem key={book.cover}>

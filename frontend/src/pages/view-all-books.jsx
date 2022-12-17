@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 
-const ViewAllBook = () => {
+const ViewAllBooks = () => {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
@@ -43,4 +43,4 @@ const ViewAllBook = () => {
   );
 }
 
-export default ViewAllBook;
+export default ViewAllBooks;
