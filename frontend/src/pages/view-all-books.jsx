@@ -7,7 +7,6 @@ import ImageListItem from '@mui/material/ImageListItem';
 
 const ViewAllBook = () => {
   const [books, setBooks] = useState([]);
-  // const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBooks = async () => {
