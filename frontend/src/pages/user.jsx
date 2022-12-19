@@ -1,12 +1,15 @@
 import SignOutButton from '../components/sign-out-button';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 axios.defaults.withCredentials = true;
 let firstRender = true;
 
 function User() {
     const [user, setUser] = useState();
+    const signedInState = useSelector((state) => state.isSignedIn);
+
     const refreshToken = async () => {
         const res = await axios.get('http://localhost:5000/api/refresh', {
             withCredentials: true,
@@ -16,15 +19,15 @@ function User() {
     }
     const sendRequest = async () => {
         let res;
-        try {
+        if (signedInState) {
             res = await axios.get('http://localhost:5000/api/user', {
                 withCredentials: true,
-            });
-        } catch (err) {
+            }).catch((err) => console.error(err.response));
+        } else {
             const userId = localStorage.getItem('userId');
             res = await axios.get(`http://localhost:5000/api/user/${userId}`, {
                 withCredentials: true,
-            }).catch((err) => console.log(err));
+            }).catch((err) => console.error(err.response));
         }
         const data = await res.data;
         return data;
