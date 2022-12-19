@@ -4,17 +4,19 @@ import { Box, Button, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function SignIn() {
     const dispatch = useDispatch();
-    const history = useNavigate();
+    const navigate = useNavigate();
     const [inputs, setInputs] = useState({
         email: '',
         password: '',
     });
+    const [persist, setPersist] = useState(localStorage.getItem('userId') != null);
 
     const handleChange = (e) => {
-        setInputs(prev => ({
+        setInputs((prev) => ({
             ...prev,
             [e.target.name]: e.target.value,
         }));
@@ -27,15 +29,33 @@ function SignIn() {
         }).catch((err) => console.error(err.response));
         const data = await res.data;
         const userId = data.user._id;
-        localStorage.setItem('userId', String(userId));
+
+        await dispatch(authActions.signIn());
+
+        if (persist) {
+            localStorage.setItem('userId', String(userId));
+        }
     };
+
+    const togglePersist = () => {
+        setPersist((prev) => !prev);
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         sendRequest()
-            .then(() => dispatch(authActions.signIn()))
-            .then(() => history('/user'));
+            .then(() => navigate('/user'));
     };
+
+    /*
+    // redirect user to User page immediately if persistent sign-in 
+    // is previously selected
+    useEffect(() => {
+        if (localStorage.getItem('userId') != null) {
+            navigate('/user');
+        }
+    }, []);
+    */
 
     return (
         <div>
@@ -43,16 +63,23 @@ function SignIn() {
                 <Box
                     marginLeft='auto'
                     marginRight='auto'
-                    width={300}
                     display='flex'
-                    flexDirection={'column'}
-                    justifyContent='center'
+                    flexDirection='column'
                     alignItems='center'
                 >
                     <Typography variant='h2'>Sign in</Typography>
                     <TextField name='email' onChange={handleChange} type={'email'} value={inputs.email} variant='outlined' placeholder='Email' margin='normal' />
                     <TextField name='password' onChange={handleChange} type={'password'} value={inputs.password} variant='outlined' placeholder='Password' margin='normal' />
                     <Button variant='contained' type='submit'>Sign in</Button>
+                    <div>
+                        <input
+                            type='checkbox'
+                            id='persist'
+                            onChange={togglePersist}
+                            checked={persist}
+                        />
+                        <label>Trust this device</label>
+                    </div>
                 </Box>
             </form>
         </div>
