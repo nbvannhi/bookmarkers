@@ -27,7 +27,7 @@ export async function getPublisher(id) {
 export async function createPublisher(name) {
   const [publisher] = await pool.query(`
   INSERT INTO publishers (name) VALUES (?)
-  `, [name])
+  `, [name]);
   const id = publisher.insertId;
   return getPublisher(id);
 }
