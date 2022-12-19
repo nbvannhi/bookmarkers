@@ -17,6 +17,7 @@ function SignOutButton() {
         }).catch((err) => console.log(err.response));
 
         if (res.status === 200) {
+            localStorage.removeItem('userId');
             return res;
         }
         return new Error('Unable to sign out. Please try again.');
@@ -25,7 +26,6 @@ function SignOutButton() {
     const handleSignOut = () => {
         sendSignOutRequest()
             .then(() => dispatch(authActions.signOut()))
-            .then(() => localStorage.clear())
             .then(() => history('/signin'));
     };
 

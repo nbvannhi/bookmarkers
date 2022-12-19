@@ -11,9 +11,9 @@ function App() {
     <React.Fragment>
       <main>
         <Routes>
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          {isSignedIn && <Route path="/user" element={<User />} />}{' '}
+          <Route path='/signin' element={<SignIn />} />
+          <Route path='/signup' element={<SignUp />} />
+          {isSignedIn && <Route path='/user' element={<User />} />}{' '}
         </Routes>
       </main>
     </React.Fragment>

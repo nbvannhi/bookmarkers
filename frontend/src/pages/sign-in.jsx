@@ -24,11 +24,10 @@ function SignIn() {
         const res = await axios.post('http://localhost:5000/api/signin', {
             email: inputs.email,
             password: inputs.password,
-        }).catch((err) => console.log(err.response));
+        }).catch((err) => console.error(err.response));
         const data = await res.data;
         const userId = data.user._id;
         localStorage.setItem('userId', String(userId));
-        return data;
     };
 
     const handleSubmit = (e) => {

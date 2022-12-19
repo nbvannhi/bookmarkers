@@ -19,17 +19,14 @@ function SignUp() {
     };
 
     const sendRequest = async () => {
-        const res = await axios.post('http://localhost:5000/api/signup', {
+        await axios.post('http://localhost:5000/api/signup', {
             email: inputs.email,
             username: inputs.username,
             password: inputs.password,
         }).catch((err) => console.log(err.response));
-        const data = await res.data;
-        return data;
     };
 
     const handleSubmit = (e) => { 
-        console.log("Submit button pressed");
         e.preventDefault();
         sendRequest().then(() => history('/signin'));
     };
