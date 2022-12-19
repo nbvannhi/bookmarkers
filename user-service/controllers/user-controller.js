@@ -2,7 +2,7 @@ const User = require('../model/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const signUp = async (req, res, next) => {
+const signUp = async (req, res) => {
     const { username, email, password } = req.body;
 
     let existingUser;
@@ -36,7 +36,7 @@ const signUp = async (req, res, next) => {
     return res.status(201).json({ message: user });
 };
 
-const signIn = async (req, res, next) => {
+const signIn = async (req, res) => {
     const { email, password } = req.body;
 
     let existingUser;
@@ -91,7 +91,7 @@ const verifyToken = (req, res, next) => {
     next();
 };
 
-const getUser = async (req, res, next) => {
+const getUser = async (req, res) => {
     const userId = req.id;
 
     let user;
