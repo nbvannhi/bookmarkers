@@ -13,7 +13,6 @@ function SignIn() {
         email: '',
         password: '',
     });
-    const [persist, setPersist] = useState(localStorage.getItem('userId') != null);
 
     const handleChange = (e) => {
         setInputs((prev) => ({
@@ -31,15 +30,8 @@ function SignIn() {
         const userId = data.user._id;
 
         await dispatch(authActions.signIn());
-
-        if (persist) {
-            localStorage.setItem('userId', String(userId));
-        }
+        localStorage.setItem('userId', String(userId));
     };
-
-    const togglePersist = () => {
-        setPersist((prev) => !prev);
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -55,7 +47,6 @@ function SignIn() {
             navigate('/user');
         }
     }, []);
-    
 
     return (
         <div>
@@ -71,15 +62,6 @@ function SignIn() {
                     <TextField name='email' onChange={handleChange} type={'email'} value={inputs.email} variant='outlined' placeholder='Email' margin='normal' />
                     <TextField name='password' onChange={handleChange} type={'password'} value={inputs.password} variant='outlined' placeholder='Password' margin='normal' />
                     <Button variant='contained' type='submit'>Sign in</Button>
-                    <div>
-                        <input
-                            type='checkbox'
-                            id='persist'
-                            onChange={togglePersist}
-                            checked={persist}
-                        />
-                        <label>Keep me signed in</label>
-                    </div>
                 </Box>
             </form>
         </div>

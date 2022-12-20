@@ -4,10 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 axios.defaults.withCredentials = true;
+let firstRender = true;
 
 function User() {
-    let firstRender = true;
-
     const [user, setUser] = useState();
     const signedInState = useSelector((state) => state.isSignedIn);
 
@@ -45,6 +44,7 @@ function User() {
             return () => clearInterval(interval);
         }
     }, []);
+    
     return (
         <div>
             {user && <h1>Welcome {user.username}!</h1>}
