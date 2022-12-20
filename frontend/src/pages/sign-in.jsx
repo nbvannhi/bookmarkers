@@ -47,7 +47,7 @@ function SignIn() {
             .then(() => navigate('/user'));
     };
 
-    /*
+    
     // redirect user to User page immediately if persistent sign-in 
     // is previously selected
     useEffect(() => {
@@ -55,7 +55,7 @@ function SignIn() {
             navigate('/user');
         }
     }, []);
-    */
+    
 
     return (
         <div>
@@ -78,7 +78,7 @@ function SignIn() {
                             onChange={togglePersist}
                             checked={persist}
                         />
-                        <label>Trust this device</label>
+                        <label>Keep me signed in</label>
                     </div>
                 </Box>
             </form>
