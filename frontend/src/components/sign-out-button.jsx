@@ -9,7 +9,7 @@ axios.defaults.withCredentials = true;
 
 function SignOutButton() {
     const dispatch = useDispatch();
-    const history = useNavigate();
+    const navigate = useNavigate();
 
     const sendSignOutRequest = async () => {
         const res = await axios.post('http://localhost:5000/api/signout', null, {
@@ -26,7 +26,7 @@ function SignOutButton() {
     const handleSignOut = () => {
         sendSignOutRequest()
             .then(() => dispatch(authActions.signOut()))
-            .then(() => history('/signin'));
+            .then(() => navigate('/signin'));
     };
 
     return (
