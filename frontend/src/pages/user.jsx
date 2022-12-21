@@ -1,5 +1,6 @@
 import SignOutButton from '../components/sign-out-button';
 import axios from 'axios';
+import { Box } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -44,11 +45,14 @@ function User() {
             return () => clearInterval(interval);
         }
     }, []);
-    
+
     return (
         <div>
-            {user && <h1>Welcome {user.username}!</h1>}
-            {user && <SignOutButton />}
+            <Box
+                marginTop={10}>
+                {user && <h1>Welcome {user.username}!</h1>}
+                {user && <SignOutButton />}
+            </Box>
         </div>
     );
 }
