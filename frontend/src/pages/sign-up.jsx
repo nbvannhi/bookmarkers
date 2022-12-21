@@ -35,6 +35,7 @@ function SignUp() {
         <div>
             <form onSubmit={handleSubmit}>
                 <Box
+                    marginTop={10}
                     marginLeft='auto'
                     marginRight='auto'
                     width={300}
