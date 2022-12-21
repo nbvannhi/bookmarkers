@@ -36,11 +36,11 @@ function NavBar() {
 
   return (
     <AppBar
-      position='sticky'
+      position='fixed'
       elevation={0}
       style={{
         background: '#0A1625',
-        marginBottom: 50
+        marginBottom: 100
       }}
     >
       <Container maxWidth='xl'>
