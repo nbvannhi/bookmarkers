@@ -8,7 +8,7 @@ import {
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 
 app.get('/publishers', async (req, res) => {
   const publishers = await getPublishers();

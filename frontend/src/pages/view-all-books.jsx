@@ -23,10 +23,10 @@ const ViewAllBooks = () => {
   return (
     <Box sx={{ width: 1080, height: 1080 }}>
       <Box sx={{ paddingY: 10, overflowY: 'scroll' }}>
-        <ImageList variant='masonry' cols={5} gap={10}>
+        <ImageList variant='masonry' cols={5} gap={10} style={{align: 'center'}}>
           {books.map((book) => (
-            <a href={`books/${book.book_id}`} width='flex'>
-              <ImageListItem key={book.cover} href={`books/${book.book_id}`}>
+            <a key={book.book_id} href={`books/${book.book_id}`} width='flex'>
+              <ImageListItem key={book.book_id}>
                 <img
                   src={`${book.cover}?w=248&fit=crop&auto=format`}
                   srcSet={`${book.cover}?w=248&fit=crop&auto=format&dpr=2 2x`}
