@@ -11,7 +11,7 @@ function AuthOptions() {
 
   return (
     <>
-      <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
+      <Box sx={{display: { xs: 'flex', md: 'none' } }}>
         <IconButton
           size='large'
           aria-label='account of current user'
@@ -33,7 +33,7 @@ function AuthOptions() {
           <LoginIcon />
         </IconButton>
       </Box>
-      <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
+      <Box sx={{display: { xs: 'none', md: 'flex' } }}>
         <Button
           sx={{ my: 2, color: 'white', display: 'block' }}
           onClick={() => navigate('/signup')}

@@ -1,3 +1,4 @@
+import AuthOptions from './auth-options';
 import UserSettings from './user-settings';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -58,7 +59,6 @@ function NavBar() {
           >
             Bookmarkers
           </Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size='large'
@@ -125,7 +125,7 @@ function NavBar() {
               </Button>
             ))}
           </Box>
-          <UserSettings />
+          {isSignedIn ? <UserSettings /> : <AuthOptions />}
         </Toolbar>
       </Container>
     </AppBar>
