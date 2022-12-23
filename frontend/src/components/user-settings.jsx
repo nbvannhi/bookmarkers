@@ -7,7 +7,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 
-const USER_SETTINGS = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const USER_SETTINGS = ['Profile', 'Account', 'Dashboard', 'Sign out'];
 
 function UserSettings() {
   const [anchorElUser, setAnchorElUser] = useState(null);
