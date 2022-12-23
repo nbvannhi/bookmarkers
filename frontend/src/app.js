@@ -1,25 +1,28 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route
-} from 'react-router-dom';
-import NavBar from './components/nav-bar.jsx';
-import ViewAllBooks from './pages/view-all-books.jsx';
-import ViewBook from './pages/view-book.jsx';
-import './style.css';
+import NavBar from './components/nav-bar';
+import SignUp from './pages/sign-up';
+import SignIn from './pages/sign-in';
+import User from './pages/user';
+import ViewAllBooks from './pages/view-all-books';
+import ViewBook from './pages/view-book';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
-
+  const isSignedIn = useSelector((state) => state.isSignedIn) || localStorage.getItem('userId') != null;
   return (
-    <div className='app'>
-      <NavBar/>
-      <BrowserRouter>
+    <React.Fragment>
+      <div className='app'>
+        <NavBar />
         <Routes>
-          <Route path='/books' element={<ViewAllBooks/>}/>
-          <Route path='/books/:book_id' element={<ViewBook/>}/>
+          <Route path='/signin' element={<SignIn />} />
+          <Route path='/signup' element={<SignUp />} />
+          {isSignedIn && <Route path='/user' element={<User />} />}{' '}
+          <Route path='/books' element={<ViewAllBooks />} />
+          <Route path='/books/:book_id' element={<ViewBook />} />
         </Routes>
-      </BrowserRouter>
-    </div>
+      </div>
+    </React.Fragment>
   );
 }
 
