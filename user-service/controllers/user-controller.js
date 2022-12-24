@@ -2,6 +2,11 @@ const User = require('../model/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const SIGN_IN_TOKEN_TIMEOUT = '35s';
+const SIGN_IN_COOKIE_TIMEOUT = 1000 * 30;
+const REFRESH_TOKEN_TIMEOUT = '3h';
+const REFRESH_COOKIE_TIMEOUT = 1000 * 60 * 60 * 3;
+
 const signUp = async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -55,7 +60,7 @@ const signIn = async (req, res) => {
   }
 
   // encrypted user id for authorisation
-  const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET_KEY, { expiresIn: '35s' });
+  const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET_KEY, { expiresIn: SIGN_IN_TOKEN_TIMEOUT });
 
   if (req.cookies[`${existingUser._id}`]) {
     req.cookies[`${existingUser._id}`] = '';
@@ -66,7 +71,7 @@ const signIn = async (req, res) => {
     token,
     {
       path: '/',
-      expires: new Date(Date.now() + 1000 * 30),
+      expires: new Date(Date.now() + SIGN_IN_COOKIE_TIMEOUT),
       httpOnly: true,
       sameSite: 'lax',
     }
@@ -104,10 +109,27 @@ const getUser = async (req, res) => {
     return res.status(404).json({ message: 'User not found.' });
   }
 
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: REFRESH_TOKEN_TIMEOUT });
+
+  if (req.cookies[`${user._id}`]) {
+    req.cookies[`${user._id}`] = '';
+  }
+
+  res.cookie(
+    String(user._id),
+    token,
+    {
+      path: '/',
+      expires: new Date(Date.now() + REFRESH_COOKIE_TIMEOUT),
+      httpOnly: true,
+      sameSite: 'lax',
+    }
+  );
+
   return res.status(200).json({ user });
 };
 
-const getUserById = async (req, res, next) => {
+const getUserById = async (req, res) => {
   const userId = req.params.id;
 
   let user;
@@ -120,7 +142,7 @@ const getUserById = async (req, res, next) => {
     return res.status(404).json({ message: 'User not found.' });
   }
 
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '35s' });
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: REFRESH_TOKEN_TIMEOUT });
 
   if (req.cookies[`${user._id}`]) {
     req.cookies[`${user._id}`] = '';
@@ -131,7 +153,7 @@ const getUserById = async (req, res, next) => {
     token,
     {
       path: '/',
-      expires: new Date(Date.now() + 1000 * 30),
+      expires: new Date(Date.now() + REFRESH_COOKIE_TIMEOUT),
       httpOnly: true,
       sameSite: 'lax',
     }
@@ -157,13 +179,13 @@ const refreshToken = (req, res, next) => {
     req.cookies[`${user.id}`] = '';
 
     // generate new token
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, { expiresIn: '35s' });
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, { expiresIn: REFRESH_TOKEN_TIMEOUT });
     res.cookie(
       String(user.id),
       token,
       {
         path: '/',
-        expires: new Date(Date.now() + 1000 * 30),
+        expires: new Date(Date.now() + REFRESH_COOKIE_TIMEOUT),
         httpOnly: true,
         sameSite: 'lax',
       }
@@ -173,7 +195,7 @@ const refreshToken = (req, res, next) => {
   });
 };
 
-const signOut = (req, res, next) => {
+const signOut = (req, res) => {
   const cookies = req.headers.cookie;
   const prevToken = cookies.split('=')[1];
   if (!prevToken) {
