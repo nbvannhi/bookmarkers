@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 axios.defaults.withCredentials = true;
+const REFRESH_TOKEN_INTERVAL = 1000 * 60 * 60 * 2.95;
 
 function User() {
   let firstRender = true;
@@ -41,7 +42,7 @@ function User() {
     } else {
       let interval = setInterval(
         () => refreshToken().then((data) => setUser(data.user)),
-        1000 * 29
+        REFRESH_TOKEN_INTERVAL
       );
       return () => clearInterval(interval);
     }
