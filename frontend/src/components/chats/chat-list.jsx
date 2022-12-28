@@ -1,5 +1,4 @@
-import AddIcon from '@mui/icons-material/Add';
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import axios from '../../utils/chat-axios';
 import { ChatState } from '../../context/chat-provider';
 import ChatLoading from './chat-loading';
