@@ -4,14 +4,13 @@ import {
   FormControl,
   IconButton,
   Input,
-  TextField,
   Typography
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import animationData from '../../animation/typing.json';
 import { ChatState } from '../../context/chat-provider';
 import axios from '../../utils/chat-axios';
-import { getChatUser, getChatUsername } from '../../utils/chat-utils';
+import { getChatUsername } from '../../utils/chat-utils';
 import ScrollableChat from './scrollable-chat';
 import { useEffect, useState } from 'react';
 import Lottie from 'lottie-react';
@@ -165,11 +164,13 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                       ? (
                         <>
                           {selectedChat.chatName}
+                          { /* TODO: add UpdateGroupChatModal */ }
                         </>
                       )
                       : (
                         <>
                           {getChatUsername(user, selectedChat.users)}
+                          { /* TODO: add ProfileModal */ }
                         </>
                       )
                   )
