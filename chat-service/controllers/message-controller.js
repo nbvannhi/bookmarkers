@@ -17,7 +17,7 @@ const getChatMessages = asyncHandler(async (req, res) => {
 });
 
 // @description create new message
-// @route POST message
+// @route POST messages
 const sendMessage = asyncHandler(async (req, res) => {
   const { content, chatId, username } = req.body;
 

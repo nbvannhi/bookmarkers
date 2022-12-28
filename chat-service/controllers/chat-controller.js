@@ -1,9 +1,8 @@
 const asyncHandler = require('express-async-handler');
-const Message = require('../model/message');
 const Chat = require('../model/chat');
 
 // @description create or fetch one-on-one chat
-// @route POST chat
+// @route POST chats
 const accessChat = asyncHandler(async (req, res) => {
   const { sender, recipient } = req.body;
 
@@ -41,7 +40,7 @@ const accessChat = asyncHandler(async (req, res) => {
 });
 
 // @description create new group chat
-// @route POST chat/group
+// @route POST chats/group
 const createGroupChat = asyncHandler(async (req, res) => {
   const admin = req.body.admin;
   if (!req.body.users || !req.body.chatName || req.body.chatName == '') {
@@ -91,3 +90,5 @@ const getUserChats = asyncHandler(async (req, res) => {
     throw new Error(err.message);
   }
 });
+
+module.exports = { accessChat, createGroupChat, getUserChats };
