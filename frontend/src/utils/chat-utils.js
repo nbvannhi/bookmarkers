@@ -4,6 +4,12 @@ export const getChatUsername = (username, users) => {
     : users[0].username;
 };
 
+export const getChatUser = (username, users) => {
+  return users[0].username === username
+    ? users[1]
+    : users[0];
+};
+
 export const isDiffSenderFromNext = (messages, m, i, username) => {
   return (
     i < messages.length - 1 &&
@@ -23,7 +29,7 @@ export const isLastMessage = (messages, i, username) => {
 
 export const isSameSenderAsPrev = (messages, m, i) => {
   return i > 0 && messages[i - 1].sender === m.sender;
-}
+};
 
 export const getMessageMargin = (messages, m, i, username) => {
   // TODO: change arbitrary value
@@ -39,4 +45,4 @@ export const getMessageMargin = (messages, m, i, username) => {
   } else {
     return 'auto';
   }
-}
+};
