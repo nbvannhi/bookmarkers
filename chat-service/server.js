@@ -4,24 +4,25 @@ const messageRoutes = require('./routes/message-routes');
 const chatRoutes = require('./routes/chat-routes');
 require('dotenv').config();
 
-const server = express();
+const app = express();
 
-server.use(express.json());
-server.use('/messages', messageRoutes);
-server.use('/chats', chatRoutes);
+app.use(express.json());
+app.use('/messages', messageRoutes);
+app.use('/chats', chatRoutes);
 
-connectDb()
-  .then(() => {
-    server.listen(process.env.PORT);
-    console.log(`chat-service listening on port ${process.env.PORT}`);
-  })
-  .catch((err) => console.error(err));
+connectDb();
+
+const server = app.listen(
+  process.env.PORT,
+  console.log(`chat-service listening on port ${process.env.PORT}`)
+)
 
 const io = require('socket.io')(server, {
   cors: {
     origin: `${process.env.FRONTEND_URI}`,
     credentials: true,
   },
+  pingTimeout: 60000,
 });
 
 io.on('connection', (socket) => {
@@ -38,7 +39,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('typing', (room) => socket.in(room).emit('typing'));
-  
+
   socket.on('stop typing', (room) => socket.in(room).emit('stop typing'));
 
   socket.on('new message', (newMessage) => {
