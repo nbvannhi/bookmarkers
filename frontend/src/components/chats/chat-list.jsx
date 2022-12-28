@@ -3,7 +3,7 @@ import axios from '../../utils/chat-axios';
 import { ChatState } from '../../context/chat-provider';
 import ChatLoading from './chat-loading';
 import React, { useEffect, useState } from 'react';
-import getChatUsername from '../../utils/get-chat-username';
+import { getChatUsername } from '../../utils/chat-utils';
 
 const CHAT_BG = '#E8E8E8';
 const SELECTED_CHAT_BG = '#38B2AC';

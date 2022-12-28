@@ -1,4 +1,4 @@
-import getUser from '../utils/get-user';
+import getUser from '../utils/user-utils';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
