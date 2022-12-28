@@ -50,7 +50,7 @@ io.on('connection', (socket) => {
     }
 
     chat.users.forEach((user) => {
-      if (user.username == newMessage.sender.username) {
+      if (user.username == newMessage.sender) {
         return;
       }
       socket.in(username).emit('message received', newMessage);
