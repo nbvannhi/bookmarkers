@@ -17,7 +17,7 @@ export async function getCollection(user_id) {
   WHERE user_id = ?
   `, [user_id]);
   const collection_id = collection[0] ? collection[0].collection_id : null
-  return collection_id;
+  return [collection[0], collection_id];
 }
 
 export async function createCollection(user_id) {
@@ -25,15 +25,16 @@ export async function createCollection(user_id) {
   INSERT INTO collections (user_id) VALUES (?)
   `, [user_id]);
   const collection_id = collection.insertId;
-  return collection_id;
+  return [collection, collection_id];
 }
 
 export async function addBookToCollection(user_id, book_id, price, note) {
-  let collection_id = await getCollection(user_id);
-  if (!collection_id) {
+  let collection = await getCollection(user_id);
+  if (!collection[0]) {
     console.log('creating new collection for user...');
-    collection_id = await createCollection(user_id);
+    collection = await createCollection(user_id);
   }
+  const collection_id = collection[1];
   const [entry] = await pool.query(`
   INSERT INTO collection_books (collection_id, book_id, price, note) VALUES (?, ?, ?, ?)
   `, [collection_id, book_id, price, note]);
