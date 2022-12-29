@@ -15,12 +15,9 @@ const ChatProvider = ({ children }) => {
   useEffect(() => {
     const userId = localStorage.getItem('userId');
 
-    const user = getUser(userId);
-
-    setUser(user);
-
-    if (!userId) {
-      navigate('/signin');
+    if (userId) {
+      const user = getUser(userId);
+      setUser(user);
     }
   }, [navigate]);
 
@@ -37,7 +34,7 @@ const ChatProvider = ({ children }) => {
         setChats,
       }}
     >
-      { children }
+      {children}
     </ChatContext.Provider>
   );
 };
