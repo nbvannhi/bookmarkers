@@ -10,6 +10,7 @@ import { Button } from '@mui/material';
 const ViewBook = () => {
   const [book, setBook] = useState([]);
   const { book_id } = useParams();
+  const user_id = localStorage.getItem('userId');
 
   useEffect(() => {
     const fetchBook = async (id) => {
@@ -58,7 +59,15 @@ const ViewBook = () => {
       >
         {book.title}
       </Typography>
-      <Button>
+      <Button
+        variant='contained'
+        disableElevation
+        href={`http://localhost:3000/collection/${user_id}/${book_id}`}
+        sx={{
+          width: 'fit-content',
+          alignSelf: 'center'
+        }}
+      >
         Add to Collection
       </Button>
     </Box>

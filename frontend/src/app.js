@@ -7,6 +7,7 @@ import ViewBook from './pages/view-book';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
+import AddBook from './pages/add-book';
 
 function App() {
   const isSignedIn = useSelector((state) => state.isSignedIn) || localStorage.getItem('userId') != null;
@@ -20,6 +21,7 @@ function App() {
           {isSignedIn && <Route path='/user' element={<User />} />}{' '}
           <Route path='/books' element={<ViewAllBooks />} />
           <Route path='/books/:book_id' element={<ViewBook />} />
+          <Route path='/collection/:user_id/:book_id' element={<AddBook />} />
         </Routes>
       </div>
     </React.Fragment>

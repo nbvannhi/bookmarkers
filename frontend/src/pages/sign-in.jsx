@@ -46,7 +46,7 @@ function SignIn() {
     if (localStorage.getItem('userId') != null) {
       navigate('/user');
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <div>
