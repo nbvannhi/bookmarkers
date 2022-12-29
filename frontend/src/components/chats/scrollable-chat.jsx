@@ -1,13 +1,14 @@
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import { ChatState } from '../../context/chat-provider';
+import stringAvatar from '../../utils/avatar-utils';
 import {
   isLastMessage,
   isDiffSenderFromNext,
   getMessageMargin,
   isSameSenderAsPrev
 } from '../../utils/chat-utils';
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const CURR_USER_MESSAGE_COLOR = '#BEE3F8';
 const OTHER_USER_MESSAGE_COLOR = '#B9F5D0';
@@ -33,15 +34,14 @@ function ScrollableChat({ messages }) {
       {
         messages &&
         messages.map(
-          (message, index) => (
-            <div style={{ display: 'flex' }} key={message._id}>
+          (m, i) => (
+            <div style={{ display: 'flex' }} key={m._id}>
               {
                 (isDiffSenderFromNext(messages, m, i, user.username) ||
                   isLastMessage(messages, i, user.username)) && (
                   <Tooltip
                     label={m.sender}
                     placement='bottom-start'
-                    hasArrow
                   >
                     <Avatar
                       mt='7px'

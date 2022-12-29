@@ -9,12 +9,11 @@ const CHAT_BG = '#E8E8E8';
 const SELECTED_CHAT_BG = '#38B2AC';
 
 function ChatList({ fetchAgain }) {
-  const [loggedUser, setLoggedUser] = useState();
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
 
   const getUserChats = async () => {
     try {
-      const username = loggedUser.username;
+      const username = user.username;
       const res = await axios.get(`/chats/${username}`);
       setChats(res.data);
     } catch (err) {
@@ -24,53 +23,49 @@ function ChatList({ fetchAgain }) {
   }
 
   useEffect(() => {
-    setLoggedUser(user);
     getUserChats();
   }, [fetchAgain]);
 
   return (
     <Box
-      d={{ base: selectedChat ? 'none' : 'flex', md: 'flex' }}
-      flexDir='column'
+      display={{ base: selectedChat ? 'none' : 'flex', md: 'flex' }}
+      flexDirection='column'
       alignItems='center'
       p={3}
-      bg='white'
-      w={{ base: '100%', md: '31%' }}
+      bgcolor='white'
+      width={{ base: '100%', md: '31%' }}
       borderRadius='lg'
-      borderWidth='1px'
     >
       <Box
-        b={3}
         px={3}
         fontSize={{ base: '28px', md: '30px' }}
         fontFamily='Work sans'
-        d='flex'
-        w='100%'
+        display='flex'
+        width='100%'
         justifyContent='space-between'
         alignItems='center'>
         <Typography>Chats</Typography>
         { /* TODO: add GroupChatModal */}
       </Box>
       <Box
-        d='flex'
-        flexDir='column'
+        display='flex'
+        flexDirection='column'
         p={3}
-        bg='#F8F8F8'
-        w='100%'
-        h='100%'
+        bgcolor='#F8F8F8'
+        width='100%'
+        height='100%'
         borderRadius='lg'
-        overflowY='hidden'
       >
         {
           chats
             ? (
-              <Stack overflowY='scroll'>
+              <Stack>
                 {
                   chats.map((chat) => (
                     <Box
                       onClick={() => setSelectedChat(chat)}
                       cursor='pointer'
-                      bg={selectedChat === chat ? SELECTED_CHAT_BG : CHAT_BG}
+                      bgcolor={selectedChat === chat ? SELECTED_CHAT_BG : CHAT_BG}
                       color={selectedChat === chat ? 'white' : 'black'}
                       px={3}
                       py={2}
@@ -81,7 +76,7 @@ function ChatList({ fetchAgain }) {
                         {
                           chat.isGroupChat
                             ? chat.chatName
-                            : getChatUsername(loggedUser.username, chat.users)
+                            : getChatUsername(user.username, chat.users)
                         }
                       </Typography>
                       {
@@ -90,8 +85,8 @@ function ChatList({ fetchAgain }) {
                             <b>{chat.latestMessage.sender} : </b>
                             {
                               chat.latestMessage.content.length > 50
-                              ? chat.latestMessage.content.substring(0, 51) + '...'
-                              : chat.latestMessage.content
+                                ? chat.latestMessage.content.substring(0, 51) + '...'
+                                : chat.latestMessage.content
                             }
                           </Typography>
                         )

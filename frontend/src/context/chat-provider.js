@@ -6,7 +6,7 @@ const ChatContext = createContext();
 
 const ChatProvider = ({ children }) => {
   const [selectedChat, setSelectedChat] = useState();
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({});
   const [notification, setNotification] = useState([]);
   const [chats, setChats] = useState();
 
@@ -16,8 +16,7 @@ const ChatProvider = ({ children }) => {
     const userId = localStorage.getItem('userId');
 
     if (userId) {
-      const user = getUser(userId);
-      setUser(user);
+      getUser(userId).then((user) => setUser(user));
     }
   }, [navigate]);
 
