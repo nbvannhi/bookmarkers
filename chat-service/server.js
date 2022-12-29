@@ -2,10 +2,12 @@ const express = require('express');
 const connectDb = require('./config/db');
 const messageRoutes = require('./routes/message-routes');
 const chatRoutes = require('./routes/chat-routes');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
 
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.json());
 app.use('/messages', messageRoutes);
 app.use('/chats', chatRoutes);
@@ -50,10 +52,10 @@ io.on('connection', (socket) => {
     }
 
     chat.users.forEach((user) => {
-      if (user.username == newMessage.sender) {
+      if (user == newMessage.sender) {
         return;
       }
-      socket.in(username).emit('message received', newMessage);
+      socket.in(user).emit('message received', newMessage);
     });
   });
 
