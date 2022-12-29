@@ -6,17 +6,30 @@ import {
   isDiffSenderFromNext,
   getMessageMargin,
   isSameSenderAsPrev
-} from '../../utils/chat-utils'
-import ScrollableFeed from 'react-scrollable-feed';
+} from '../../utils/chat-utils';
+import { useEffect, useRef } from 'react';
 
 const CURR_USER_MESSAGE_COLOR = '#BEE3F8';
 const OTHER_USER_MESSAGE_COLOR = '#B9F5D0';
 
 function ScrollableChat({ messages }) {
   const { user } = ChatState();
+  const messageContainer = useRef(null);
+
+  useEffect(() => {
+    if (messageContainer) {
+      messageContainer.current.addEventListener(
+        'DOMNodeInserted',
+        (event) => {
+          const { currentTarget: target } = event;
+          target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+        }
+      )
+    }
+  })
 
   return (
-    <ScrollableFeed>
+    <div ref={messageContainer}>
       {
         messages &&
         messages.map(
@@ -58,7 +71,7 @@ function ScrollableChat({ messages }) {
           )
         )
       }
-    </ScrollableFeed>
+    </div>
   );
 }
 
