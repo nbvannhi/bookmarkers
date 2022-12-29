@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function SignUp() {
-  const history = useNavigate();
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     email: '',
     username: '',
@@ -28,7 +28,7 @@ function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    sendRequest().then(() => history('/signin'));
+    sendRequest().then(() => navigate('/signin'));
   };
 
   return (
