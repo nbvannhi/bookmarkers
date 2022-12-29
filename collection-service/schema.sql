@@ -4,7 +4,7 @@ USE collection_db;
 
 CREATE TABLE collections (
   collection_id SERIAL PRIMARY KEY,
-  user_id BIGINT UNSIGNED UNIQUE NOT NULL
+  user_id VARCHAR(256) UNIQUE NOT NULL
 );
 
 CREATE TABLE collection_books (
