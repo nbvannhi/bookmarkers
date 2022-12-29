@@ -12,7 +12,7 @@ import { ChatState } from '../../context/chat-provider';
 import axios from '../../utils/chat-axios';
 import { getChatUsername } from '../../utils/chat-utils';
 import ScrollableChat from './scrollable-chat';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Lottie from 'lottie-react';
 
 import io from 'socket.io-client';
@@ -20,12 +20,12 @@ import io from 'socket.io-client';
 const SERVER = 'http://localhost:4200';
 let socket, selectedChatCompare;
 
-function SingleChat({ fetchAgain, setFetchAgain }) {
+function Chat({ fetchAgain, setFetchAgain }) {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSocketConnected, setIsSocketConnected] = useState(false);
-  const [istyping, setIsTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
 
   const { selectedChat, setSelectedChat, user, notification, setNotification } = ChatState();
 
@@ -79,7 +79,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
         );
 
         socket.emit('new message', res.data);
-        setMessages([...messages, data]);
+        setMessages([...messages, res.data]);
       } catch (err) {
         console.error(err);
         // TODO: add toast
@@ -94,7 +94,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
       return;
     }
 
-    if (!istyping) {
+    if (!isTyping) {
       socket.emit('typing', selectedChat._id);
     }
 
@@ -103,8 +103,8 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
 
     setTimeout(() => {
       const currTime = new Date().getTime();
-      const timeDiff = timeNow - lastTypingTime;
-      if (timeDiff >= interval && istyping) {
+      const timeDiff = currTime - lastTypingTime;
+      if (timeDiff >= interval && isTyping) {
         socket.emit('stop typing', selectedChat._id);
       }
     }, interval);
@@ -146,17 +146,18 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                 fontSize={{ base: '28px', md: '30px' }}
                 pb={3}
                 px={2}
-                w='100%'
+                width='100%'
                 fontFamily='Work sans'
-                d='flex'
+                display='flex'
                 justifyContent={{ base: 'space-between' }}
                 alignItems='center'
               >
                 <IconButton
-                  d={{ base: 'flex', md: 'none' }}
-                  icon={<ArrowBackIcon />}
+                  display={{ base: 'flex', md: 'none' }}
                   onClick={() => setSelectedChat('')}
-                />
+                >
+                  <ArrowBackIcon />
+                </IconButton>
                 {
                   messages &&
                   (
@@ -164,36 +165,35 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                       ? (
                         <>
                           {selectedChat.chatName}
-                          { /* TODO: add UpdateGroupChatModal */ }
+                          { /* TODO: add UpdateGroupChatModal */}
                         </>
                       )
                       : (
                         <>
-                          {getChatUsername(user, selectedChat.users)}
-                          { /* TODO: add ProfileModal */ }
+                          {getChatUsername(user.username, selectedChat.users)}
+                          { /* TODO: add ProfileModal */}
                         </>
                       )
                   )
                 }
               </Typography>
               <Box
-                d='flex'
-                flexDir='column'
+                display='flex'
+                flexDirection='column'
                 justifyContent='flex-end'
                 p={3}
-                bg='#E8E8E8'
-                w='100%'
-                h='100%'
+                bgcolor='#E8E8E8'
+                width='100%'
+                height='100%'
                 borderRadius='lg'
-                overflowY='hidden'
               >
                 {
                   isLoading
                     ? (
                       <CircularProgress
                         size='xl'
-                        w={20}
-                        h={20}
+                        width={20}
+                        height={20}
                         alignSelf='center'
                         margin='auto'
                       />
@@ -222,7 +222,7 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                   }
                   <Input
                     variant='filled'
-                    bg='#E0E0E0'
+                    bgcolor='#E0E0E0'
                     placeholder='Enter a message..'
                     value={newMessage}
                     onChange={typingHandler}
@@ -233,10 +233,10 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
           )
           : (
             <Box
-              d='flex'
+              display='flex'
               alignItems='center'
               justifyContent='center'
-              h='100%'
+              height='100%'
             >
               <Typography
                 fontSize='3xl'
@@ -252,4 +252,4 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
   );
 }
 
-export default SingleChat;
+export default Chat;
