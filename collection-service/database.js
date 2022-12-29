@@ -14,9 +14,10 @@ export async function getCollection(user_id) {
   const [collection] = await pool.query(`
   SELECT *
   FROM collections
-  WHERE collection_id = ?
+  WHERE user_id = ?
   `, [user_id]);
-  return collection;
+  const collection_id = collection[0] ? collection[0].collection_id : null
+  return collection_id;
 }
 
 export async function createCollection(user_id) {
@@ -24,16 +25,17 @@ export async function createCollection(user_id) {
   INSERT INTO collections (user_id) VALUES (?)
   `, [user_id]);
   const collection_id = collection.insertId;
-  return getCollection(user_id);
+  return collection_id;
 }
 
-export async function editCollection(user_id, book_id, price, note) {
-  const collection_id = getCollection(user_id).collection_id;
-  if (collection_id === NULL) {
-    createCollection(user_id);
+export async function addBookToCollection(user_id, book_id, price, note) {
+  let collection_id = await getCollection(user_id);
+  if (!collection_id) {
+    console.log('creating new collection for user...');
+    collection_id = await createCollection(user_id);
   }
-  const [collection_book] = await pool.query(`
-  INSERT INTO collection_books (collection_id) VALUES (?, ?, ?)
-  `, [book_id, price, note]);
-  return collection_book;
+  const [entry] = await pool.query(`
+  INSERT INTO collection_books (collection_id, book_id, price, note) VALUES (?, ?, ?, ?)
+  `, [collection_id, book_id, price, note]);
+  return entry;
 }
