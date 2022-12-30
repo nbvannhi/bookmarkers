@@ -5,6 +5,7 @@ import { URL_BOOK_SVC } from '../configs';
 
 const ViewCollection = () => {
   const [collection, setCollection] = useState([]);
+  const [books, setBooks] = useState([]);
   const { user_id } = useParams();
 
   const fetchCollection = async (user_id) => {
@@ -16,8 +17,21 @@ const ViewCollection = () => {
     }
   }
 
-  useEffect(() => {    
+  const fetchBooks = async (collection) => {
+    try {
+      for (let cid; cid < collection.length; cid++) {
+        const bid = collection[cid].book_id;
+        const res = await axios.get(`${URL_BOOK_SVC}/${bid}`);
+        setBooks(books => [...books, res.data[0]]);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
     fetchCollection(user_id);
+    fetchBooks(collection);
   }, [user_id]);
 
   return (
