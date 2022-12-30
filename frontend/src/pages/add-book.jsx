@@ -11,20 +11,31 @@ import axios from 'axios';
 import { URL_BOOK_SVC, URL_COLLECTION_SVC } from '../configs.js';
 
 const AddBook = () => {
-  const [entry, setEntry] = useState({ price: 0, note: '' });
   const [book, setBook] = useState([]);
+  const [price, setPrice] = useState([]);
+  const [note, setNote] = useState([]);
   const { user_id, book_id } = useParams();
 
-  const handleChange = (e) => {
-    setEntry((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  const handlePriceChange = (e) => {
+    setPrice(e.target.value);
+  }
+
+  const handleNoteChange = (e) => {
+    setNote(e.target.value);
+  }
 
   const handleSubmit = (e) => {
     addBookToCollection();
-  };
+  }
+
+  const fetchBook = async (id) => {
+    try {
+      const res = await axios.get(`${URL_BOOK_SVC}/${id}`);
+      setBook(res.data[0]);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   const addBookToCollection = async () => {
     try {
@@ -37,14 +48,6 @@ const AddBook = () => {
   }
 
   useEffect(() => {
-    const fetchBook = async (id) => {
-      try {
-        const res = await axios.get(`${URL_BOOK_SVC}/${id}`);
-        setBook(res.data[0]);
-      } catch (err) {
-        console.log(err);
-      }
-    }
     fetchBook(book_id);
   }, [user_id, book_id]);
 
@@ -87,11 +90,12 @@ const AddBook = () => {
           </Typography>
           <TextField
             name='Price'
-            onChange={handleChange}
-            value={entry.price}
+            onChange={handlePriceChange}
+            value={price}
             variant='outlined'
             placeholder='Price'
             margin='normal'
+            type='number'
             sx={{
               width: 300,
               alignSelf: 'center'
@@ -99,8 +103,8 @@ const AddBook = () => {
           />
           <TextField
             name='Note'
-            onChange={handleChange}
-            value={entry.note}
+            onChange={handleNoteChange}
+            value={note}
             variant='outlined'
             placeholder='Note'
             margin='normal'
