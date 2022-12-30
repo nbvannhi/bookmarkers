@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { URL_BOOK_SVC } from '../configs';
+import {
+  Box,
+  ImageList,
+  ImageListItem
+} from '@mui/material'
 
 const ViewCollection = () => {
   const [collection, setCollection] = useState([]);
@@ -32,7 +37,7 @@ const ViewCollection = () => {
   useEffect(() => {
     fetchCollection(user_id);
     fetchBooks(collection);
-  }, [user_id]);
+  }, [user_id, collection]);
 
   return (
     <Box sx={{ width: 1080, height: 1080 }}>
