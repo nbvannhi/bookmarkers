@@ -1,10 +1,10 @@
-function stringToColor(string: string) {
+function stringToColor(str) {
   let hash = 0;
   let i;
 
   /* eslint-disable no-bitwise */
-  for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+  for (i = 0; i < str.length; i += 1) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
   }
 
   let color = '#';
