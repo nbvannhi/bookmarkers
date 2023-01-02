@@ -39,8 +39,9 @@ function SearchUser() {
 
     try {
       setIsLoading(true);
+      const userId = localStorage.getItem('userId');
 
-      const res = await axiosUser.get(`/users?search=${search}`);
+      const res = await axiosUser.get(`/users/${userId}?search=${search}`);
       setSearchResult(res.data);
 
       setIsLoading(false);
