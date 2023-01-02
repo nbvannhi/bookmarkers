@@ -9,6 +9,6 @@ router.post('/signout', verifyToken, signOut);
 router.get('/user', verifyToken, getUser);
 router.get('/user/:id', getUserById);
 router.get('/refresh', refreshToken, verifyToken, getUser);
-router.get('/users', searchUsers);
+router.get('/users/:id', searchUsers);
 
 module.exports = router;

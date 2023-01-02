@@ -216,9 +216,9 @@ const signOut = (req, res) => {
 };
 
 // @description get or search all users
-// @route GET /api/users?search=
+// @route GET /api/users/:id?search=
 const searchUsers = async (req, res) => {
-  const { userId } = req.body;
+  const userId = req.params.id;
 
   const query = req.query.search
     ? {
