@@ -100,7 +100,7 @@ function SearchUser() {
         onClose={toggleDrawer(false)}
       >
         <Box
-          sx={{ width: 'auto', marginLeft: '10px', marginTop: '10px' }}
+          sx={{ width: 'auto', margin: '10px' }}
           role='presentation'
         >
           <Typography variant='body1'>
@@ -131,7 +131,7 @@ function SearchUser() {
                         <UserListItem
                           key={u._id}
                           user={u}
-                          handleFunction={() => accessChat(u.username)}
+                          handleClickUser={() => accessChat(u.username)}
                         />
                       ))
                     }
