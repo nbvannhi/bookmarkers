@@ -216,22 +216,20 @@ const signOut = (req, res) => {
 };
 
 // @description get or search all users
-// @route GET /api/user?search=
+// @route GET /api/users?search=
 const searchUsers = async (req, res) => {
   const { userId } = req.body;
 
   const query = req.query.search
     ? {
-      $or: [
+      $and: [
         { username: { $regex: req.query.search, $options: 'i' } },
+        { _id: { $ne: userId } }
       ],
     }
     : {};
 
-  const users = await (await User.find(query))
-    .find({
-      _id: { $ne: userId }
-    }, '-password');
+  const users = await User.find(query, '-password');
 
   return res.send(users);
 };
