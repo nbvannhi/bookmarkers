@@ -18,6 +18,7 @@ function SearchUser() {
 
   const {
     setSelectedChat,
+    user,
     chats,
     setChats,
   } = ChatState();
@@ -51,7 +52,7 @@ function SearchUser() {
     }
   };
 
-  const accessChat = async (sender) => {
+  const accessChat = async (other) => {
     try {
       setIsLoadingChat(true);
 
@@ -60,7 +61,7 @@ function SearchUser() {
           'Content-Type': 'application/json',
         }
       };
-      const res = await axiosChat.post('/chats', { sender }, config);
+      const res = await axiosChat.post('/chats', { user: user.username, other: other }, config);
       const data = res.data;
 
       const isChatCreated = chats.find((c) => c.id === data._id);

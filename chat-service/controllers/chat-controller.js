@@ -4,17 +4,17 @@ const Chat = require('../model/chat');
 // @description create or fetch one-on-one chat
 // @route POST chats
 const accessChat = asyncHandler(async (req, res) => {
-  const { sender, recipient } = req.body;
+  const { user, other } = req.body;
 
-  if (!sender || !recipient) {
+  if (!user || !other) {
     return res.sendStatus(400);
   }
 
   let existingChat = await Chat.find({
     isGroupChat: false,
     $and: [
-      { users: { $elemMatch: { $eq: sender } } },
-      { users: { $elemMatch: { $eq: recipient } } },
+      { users: { $elemMatch: { $eq: user } } },
+      { users: { $elemMatch: { $eq: other } } },
       { chatName: null },
     ]
   })
@@ -25,7 +25,7 @@ const accessChat = asyncHandler(async (req, res) => {
   } else {
     const newChat = {
       isGroupChat: false,
-      users: [sender, recipient],
+      users: [user, other],
     };
 
     try {
