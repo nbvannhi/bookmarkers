@@ -72,10 +72,11 @@ function Chat({ fetchAgain, setFetchAgain }) {
           }
         };
         const res = await axios.post(
-          '/api/messages',
+          '/messages',
           {
+            username: user.username,
             content: newMessage,
-            chatId: selectedChat,
+            chatId: selectedChat._id,
           },
           config,
         );
@@ -196,7 +197,6 @@ function Chat({ fetchAgain, setFetchAgain }) {
                         size='xl'
                         width={20}
                         height={20}
-                        alignSelf='center'
                         margin='auto'
                       />
                     )
