@@ -1,7 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material';
 import axios from '../../utils/chat-axios';
 import { ChatState } from '../../context/chat-provider';
-import ChatLoading from './chat-loading';
+import ListLoading from './list-loading';
 import React, { useEffect, useState } from 'react';
 import { getChatUsername } from '../../utils/chat-utils';
 
@@ -97,7 +97,7 @@ function ChatList({ fetchAgain }) {
               </Stack>
             )
             : (
-              <ChatLoading />
+              <ListLoading />
             )
         }
       </Box>
