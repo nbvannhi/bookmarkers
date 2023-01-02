@@ -1,11 +1,11 @@
 export const getChatUsername = (username, users) => {
-  return users[0].username === username
-    ? users[1].username
-    : users[0].username;
+  return users[0] === username
+    ? users[1]
+    : users[0];
 };
 
 export const getChatUser = (username, users) => {
-  return users[0].username === username
+  return users[0] === username
     ? users[1]
     : users[0];
 };
