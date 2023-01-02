@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@chakra-ui/hooks": "^2.1.3",
-    "@chakra-ui/modal": "^2.2.6",
-    "@chakra-ui/toast": "^4.0.7",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@fontsource/roboto": "^4.5.8",
