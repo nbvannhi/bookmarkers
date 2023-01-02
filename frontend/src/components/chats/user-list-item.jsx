@@ -1,10 +1,8 @@
 import { Avatar, Box, Typography } from '@mui/material';
-import { ChatState } from '../../context/chat-provider';
 import stringAvatar from '../../utils/avatar-utils';
 
-function UserListItem({ handleFunction }) {
-  const { user } = ChatState();
-
+function UserListItem({ user, handleFunction }) {
+  
   return (
     <Box
       onClick={handleFunction}
