@@ -58,7 +58,9 @@ function Chat({ fetchAgain, setFetchAgain }) {
   };
 
   const sendMessage = async (event) => {
-    if (event.key === 'enter' && newMessage) {
+    console.log('send message');
+
+    if (event.key === 'Enter' && newMessage) {
       socket.emit('stop typing', selectedChat._id);
 
       try {
