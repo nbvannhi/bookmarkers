@@ -34,7 +34,8 @@ const sendMessage = asyncHandler(async (req, res) => {
   try {
     let message = await Message.create(newMessage);
 
-    message = await message.populate('chat').execPopulate();
+    // TODO: check following 2 lines
+    message = await message.populate('chat');
     await Chat.findByIdAndUpdate(chatId, { latestMessage: message });
 
     return res.json(message);
