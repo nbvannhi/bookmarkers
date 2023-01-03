@@ -58,8 +58,6 @@ function Chat({ fetchAgain, setFetchAgain }) {
   };
 
   const sendMessage = async (event) => {
-    console.log('send message');
-
     if (event.key === 'Enter' && newMessage) {
       socket.emit('stop typing', selectedChat._id);
 
@@ -115,7 +113,7 @@ function Chat({ fetchAgain, setFetchAgain }) {
 
   useEffect(() => {
     socket = io(SERVER);
-    socket.emit('setup', user);
+    socket.emit('setup', user.username);
     socket.on('connected', () => setIsSocketConnected(true));
     socket.on('typing', () => setIsTyping(true));
     socket.on('stop typing', () => setIsTyping(false));
@@ -137,7 +135,7 @@ function Chat({ fetchAgain, setFetchAgain }) {
         setMessages([...messages, newMessage]);
       }
     });
-  });
+  }, []);
 
   return (
     <>
