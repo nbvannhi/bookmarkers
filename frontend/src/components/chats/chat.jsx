@@ -130,11 +130,11 @@ function Chat({ fetchAgain, setFetchAgain }) {
       if (!selectedChatCompare || selectedChatCompare._id !== newMessage.chat._id) {
         if (!notification.includes(newMessage)) {
           setNotification([newMessage, ...notification]);
-          setFetchAgain(true);
         }
       } else {
         setMessages([...messages, newMessage]);
       }
+      setFetchAgain(true);
     });
   }, []);
 
