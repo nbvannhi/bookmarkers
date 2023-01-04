@@ -6,7 +6,7 @@ import { ChatState } from '../context/chat-provider';
 import React, { useState } from 'react';
 
 function ViewAllChats() {
-  const [fetchAgain, setFetchAgain] = useState(false);
+  const [fetchAgain, setFetchAgain] = useState(true);
   const { user } = ChatState();
 
   return (
@@ -14,7 +14,7 @@ function ViewAllChats() {
       <Box sx={{ paddingY: 10 }} display='flex' flexDirection='row'>
         <Box display='flex' flexDirection='column'>
           {user && <SearchUser />}
-          {user && <ChatList fetchAgain={fetchAgain} />}
+          {user && <ChatList fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />}
         </Box>
         {user && <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />}
       </Box>

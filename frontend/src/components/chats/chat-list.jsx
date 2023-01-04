@@ -8,7 +8,7 @@ import { getChatUsername } from '../../utils/chat-utils';
 const CHAT_BG = '#E8E8E8';
 const SELECTED_CHAT_BG = '#38B2AC';
 
-function ChatList({ fetchAgain }) {
+function ChatList({ fetchAgain, setFetchAgain }) {
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
 
   const getUserChats = async () => {
@@ -16,6 +16,7 @@ function ChatList({ fetchAgain }) {
       const username = user.username;
       const res = await axios.get(`/chats/${username}`);
       setChats(res.data);
+      setFetchAgain(false);
     } catch (err) {
       // TODO: handle error with toast
       console.error(err);

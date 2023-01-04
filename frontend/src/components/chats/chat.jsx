@@ -81,6 +81,7 @@ function Chat({ fetchAgain, setFetchAgain }) {
 
         socket.emit('new message', res.data);
         setMessages([...messages, res.data]);
+        setFetchAgain(true);
       } catch (err) {
         console.error(err);
         // TODO: add toast
@@ -129,7 +130,7 @@ function Chat({ fetchAgain, setFetchAgain }) {
       if (!selectedChatCompare || selectedChatCompare._id !== newMessage.chat._id) {
         if (!notification.includes(newMessage)) {
           setNotification([newMessage, ...notification]);
-          setFetchAgain(!fetchAgain);
+          setFetchAgain(true);
         }
       } else {
         setMessages([...messages, newMessage]);
