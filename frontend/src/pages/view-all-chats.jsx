@@ -11,8 +11,8 @@ function ViewAllChats() {
 
   return (
     <div style={{ width: '100%' }}>
-      <Box sx={{ paddingY: 10 }} display='flex' flexDirection='row'>
-        <Box display='flex' flexDirection='column'>
+      <Box sx={{ paddingY: 10 }} display='flex' position='fixed' flexDirection='row' justifyContent='space-evenly' width='100%'>
+        <Box display='flex' flexDirection='column' width='30%'>
           {user && <SearchUser />}
           {user && <ChatList fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />}
         </Box>

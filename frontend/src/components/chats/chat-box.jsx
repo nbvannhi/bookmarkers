@@ -12,7 +12,7 @@ function ChatBox({ fetchAgain, setFetchAgain }) {
       flexDirection='column'
       p={3}
       bgcolor='white'
-      width={{ base: '100%', md: '68%' }}
+      width='60%'
       borderRadius='lg'
     >
       <Chat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />

@@ -34,7 +34,7 @@ function ChatList({ fetchAgain, setFetchAgain }) {
       alignItems='center'
       p={3}
       bgcolor='white'
-      width={{ base: '100%', md: '31%' }}
+      width='100%'
       borderRadius='lg'
     >
       <Box
@@ -54,7 +54,6 @@ function ChatList({ fetchAgain, setFetchAgain }) {
         p={3}
         bgcolor='#F8F8F8'
         width='100%'
-        height='100%'
         borderRadius='lg'
       >
         {
