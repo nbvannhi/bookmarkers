@@ -25,6 +25,7 @@ const AddBook = () => {
   }
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     addBookToCollection();
   }
 
@@ -38,13 +39,14 @@ const AddBook = () => {
   }
 
   const addBookToCollection = async () => {
-    try {
-      const res = await axios.post(`${URL_COLLECTION_SVC}/${user_id}/${book_id}`);
-      console.log(res);
-      alert('Book added to collection.');
-    } catch (err) {
-      console.log(err);
-    }
+    console.log(URL_COLLECTION_SVC);
+    await axios.post(`${URL_COLLECTION_SVC}/${user_id}/${book_id}`, {
+      user_id: user_id,
+      book_id: book_id,
+      price: price,
+      note: note,
+    }).catch((err) => console.log(err.response));
+    alert('Book added to collection.');
   }
 
   useEffect(() => {
@@ -53,7 +55,7 @@ const AddBook = () => {
 
   return (
     <div>      
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} method='post'>
           <Box
           sx={{
             maxWidth: 500,
@@ -115,8 +117,8 @@ const AddBook = () => {
           />
           <Button
             variant='contained'
-            disableElevation
             type='submit'
+            disableElevation
             sx={{
               width: 300,
               alignSelf: 'center',

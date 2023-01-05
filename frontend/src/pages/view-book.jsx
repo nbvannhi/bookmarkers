@@ -12,8 +12,7 @@ const ViewBook = () => {
   const { book_id } = useParams();
   const user_id = localStorage.getItem('userId');
 
-  useEffect(() => {
-    const fetchBook = async (id) => {
+  const fetchBook = async (id) => {
       try {
         const res = await axios.get(`${URL_BOOK_SVC}/${id}`);
         setBook(res.data[0]);
@@ -21,6 +20,8 @@ const ViewBook = () => {
         console.log(err);
       }
     }
+
+  useEffect(() => {
     fetchBook(book_id);
   }, [book_id]);
 
