@@ -62,7 +62,7 @@ export async function checkCollectionEntry(collection_id, book_id) {
   FROM collection_books
   WHERE collection_id = ? AND book_id = ?
   `, [collection_id, book_id]);
-  return entry !== null;
+  return entry.length !== 0;
 }
 
 export async function updateCollectionEntry(user_id, book_id, price, note) {
@@ -72,8 +72,7 @@ export async function updateCollectionEntry(user_id, book_id, price, note) {
     collection = await createCollection(user_id);
   }
   const collection_id = collection[1];
-  const inCollection = collection[0]
-    ? checkCollectionEntry(collection_id, book_id) : false;
+  const inCollection = await checkCollectionEntry(collection_id, book_id);
   return inCollection
     ? editCollectionEntry(collection_id, book_id, price, note)
     : addCollectionEntry(collection_id, book_id, price, note);
