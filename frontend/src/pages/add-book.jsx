@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -14,6 +14,7 @@ const AddBook = () => {
   const [book, setBook] = useState([]);
   const [price, setPrice] = useState([]);
   const [note, setNote] = useState([]);
+  const navigate = useNavigate();
   const { book_id } = useParams();
   const user_id = localStorage.getItem('userId');
 
@@ -48,6 +49,7 @@ const AddBook = () => {
       note: note,
     }).catch((err) => console.log(err.response));
     alert('Book entry updated in collection.');
+    navigate(`/books/${book_id}`, { replace: true });
   }
 
   useEffect(() => {

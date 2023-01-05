@@ -26,8 +26,8 @@ const ViewBook = () => {
   const fetchEntry = async (id) => {
     try {
       const res = await axios.get(`${URL_COLLECTION_SVC}/${user_id}/${id}`);
-      setEntry(res.data[0]);
-      if (Object.keys(entry).length !== 0) {
+      if (res.data.length !== 0) {
+        setEntry(res.data[0]);
         setInCollection(true);
       }
     } catch (err) {
