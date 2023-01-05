@@ -25,12 +25,30 @@ function ScrollableChat({ messages }) {
           const { currentTarget: target } = event;
           target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
         }
-      )
+      );
     }
-  })
+  });
+
+  useEffect(() => {
+    if (messageContainer && messageContainer.current) {
+      const element = messageContainer.current;
+      element.scroll({
+        top: element.scrollHeight,
+        left: 0,
+        behaviour: 'smooth'
+      });
+    }
+  }, [messageContainer, messages]);
 
   return (
-    <div ref={messageContainer}>
+    <div ref={messageContainer}
+      position='fixed'
+      style={{
+        height: 280,
+        maxHeight: 280,
+        overflow: 'scroll'
+      }}
+    >
       {
         messages &&
         messages.map(

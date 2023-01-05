@@ -183,7 +183,7 @@ function Chat({ fetchAgain, setFetchAgain }) {
                 display='flex'
                 flexDirection='column'
                 justifyContent='flex-end'
-                p={3}
+                p={2}
                 bgcolor='#E8E8E8'
                 width='100%'
                 height='100%'
@@ -200,15 +200,14 @@ function Chat({ fetchAgain, setFetchAgain }) {
                       />
                     )
                     : (
-                      <div>
-                        <ScrollableChat messages={messages} />
-                      </div>
+                      <ScrollableChat messages={messages} />
                     )
                 }
                 <FormControl
                   required={true}
                   onKeyDown={sendMessage}
                   mt={3}
+                  position='fixed'
                 >
                   {
                     isTyping && (
