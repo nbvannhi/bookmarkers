@@ -4,8 +4,8 @@ import { URL_BOOK_SVC, URL_COLLECTION_SVC } from '../configs';
 import {
   Box,
   ImageList,
-  ImageListItem
-} from '@mui/material'
+  ImageListItem,
+} from '@mui/material';
 
 const ViewCollection = () => {
   const [collection, setCollection] = useState([]);
