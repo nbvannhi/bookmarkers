@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { URL_BOOK_SVC } from '../configs';
+import { URL_BOOK_SVC, URL_COLLECTION_SVC } from '../configs';
 import {
   Box,
   ImageList,
@@ -11,20 +10,21 @@ import {
 const ViewCollection = () => {
   const [collection, setCollection] = useState([]);
   const [books, setBooks] = useState([]);
-  const { user_id } = useParams();
+  const user_id = localStorage.getItem('userId');
 
   const fetchCollection = async (user_id) => {
     try {
-      const res = await axios.get(`${URL_BOOK_SVC}/${user_id}`);
+      const res = await axios.get(`${URL_COLLECTION_SVC}/${user_id}`);
       setCollection(res.data);
-    } catch (err) {
+      fetchBooks(collection);
+  } catch (err) {
       console.log(err);
     }
   }
 
   const fetchBooks = async (collection) => {
     try {
-      for (let cid; cid < collection.length; cid++) {
+      for (let cid = 0; cid < collection.length; cid++) {
         const bid = collection[cid].book_id;
         const res = await axios.get(`${URL_BOOK_SVC}/${bid}`);
         setBooks(books => [...books, res.data[0]]);
@@ -35,9 +35,10 @@ const ViewCollection = () => {
   }
 
   useEffect(() => {
+    // eslint-disable-next-line
     fetchCollection(user_id);
-    fetchBooks(collection);
-  }, [user_id, collection]);
+    // eslint-disable-next-line
+  }, [user_id, JSON.stringify(collection)])
 
   return (
     <Box sx={{ width: 1080, height: 1080 }}>

@@ -22,7 +22,7 @@ function App() {
           {isSignedIn && <Route path='/user' element={<User />} />}{' '}
           <Route path='/books' element={<ViewAllBooks />} />
           <Route path='/books/:book_id' element={<ViewBook />} />
-          <Route path='/collection/:user_id' element={<ViewCollection />} />
+          {isSignedIn && <Route path='/collection/:user_id' element={<ViewCollection />} />}{' '}
           <Route path='/collection/:user_id/:book_id' element={<AddBook />} />
         </Routes>
       </div>

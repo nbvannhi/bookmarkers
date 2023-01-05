@@ -14,7 +14,8 @@ const AddBook = () => {
   const [book, setBook] = useState([]);
   const [price, setPrice] = useState([]);
   const [note, setNote] = useState([]);
-  const { user_id, book_id } = useParams();
+  const { book_id } = useParams();
+  const user_id = localStorage.getItem('userId');
 
   const handlePriceChange = (e) => {
     setPrice(e.target.value);

@@ -16,7 +16,7 @@ export async function getCollection(user_id) {
   FROM collections
   WHERE user_id = ?
   `, [user_id]);
-  const collection_id = collection[0] ? collection[0].collection_id : null
+  const collection_id = collection[0] ? collection[0].collection_id : null;
   return [collection[0], collection_id];
 }
 
@@ -26,6 +26,20 @@ export async function createCollection(user_id) {
   `, [user_id]);
   const collection_id = collection.insertId;
   return [collection, collection_id];
+}
+
+export async function getBooksFromCollection(user_id) {
+  let collection = await getCollection(user_id);
+  if (!collection[0]) {
+    return null;
+  }
+  const collection_id = collection[1];
+  const [entries] = await pool.query(`
+  SELECT *
+  FROM collection_books
+  WHERE collection_id = ?
+  `, [collection_id]);
+  return entries;
 }
 
 export async function addBookToCollection(user_id, book_id, price, note) {
