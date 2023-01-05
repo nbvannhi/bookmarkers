@@ -44,7 +44,7 @@ const ViewCollection = () => {
       <Box sx={{ paddingY: 10, overflowY: 'scroll' }}>
         <ImageList variant='masonry' cols={5} gap={10} style={{align: 'center'}}>
           {books.map((book) => (
-            <a key={book.book_id} href={`books/${book.book_id}`} width='flex'>
+            <a key={book.book_id} href={`http://localhost:3000/books/${book.book_id}`} width='flex'>
               <ImageListItem key={book.book_id}>
                 <img
                   src={`${book.cover}?w=248&fit=crop&auto=format`}
