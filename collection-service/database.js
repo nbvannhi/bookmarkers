@@ -28,7 +28,7 @@ export async function createCollection(user_id) {
   return [collection, collection_id];
 }
 
-export async function getBooksFromCollection(user_id) {
+export async function getCollectionEntries(user_id) {
   let collection = await getCollection(user_id);
   if (!collection[0]) {
     return null;
@@ -42,7 +42,7 @@ export async function getBooksFromCollection(user_id) {
   return entries;
 }
 
-export async function getBookFromCollection(user_id, book_id) {
+export async function getCollectionEntry(user_id, book_id) {
   let collection = await getCollection(user_id);
   if (!collection[0]) {
     return null;
@@ -56,15 +56,41 @@ export async function getBookFromCollection(user_id, book_id) {
   return entry;
 }
 
-export async function addBookToCollection(user_id, book_id, price, note) {
+export async function checkCollectionEntry(collection_id, book_id) {
+  const [entry] = await pool.query(`
+  SELECT *
+  FROM collection_books
+  WHERE collection_id = ? AND book_id = ?
+  `, [collection_id, book_id]);
+  return entry !== null;
+}
+
+export async function updateCollectionEntry(user_id, book_id, price, note) {
   let collection = await getCollection(user_id);
   if (!collection[0]) {
     console.log('creating new collection for user...');
     collection = await createCollection(user_id);
   }
   const collection_id = collection[1];
+  const inCollection = collection[0]
+    ? checkCollectionEntry(collection_id, book_id) : false;
+  return inCollection
+    ? editCollectionEntry(collection_id, book_id, price, note)
+    : addCollectionEntry(collection_id, book_id, price, note);
+}
+
+export async function addCollectionEntry(collection_id, book_id, price, note) {
   const [entry] = await pool.query(`
   INSERT INTO collection_books (collection_id, book_id, price, note) VALUES (?, ?, ?, ?)
   `, [collection_id, book_id, price, note]);
+  return entry;
+}
+
+export async function editCollectionEntry(collection_id, book_id, price, note) {
+  const [entry] = await pool.query(`
+  UPDATE collection_books
+  SET price = ?, note = ?
+  WHERE collection_id = ? AND book_id = ?
+  `, [price, note, collection_id, book_id]);
   return entry;
 }

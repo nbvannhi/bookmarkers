@@ -27,7 +27,7 @@ const AddBook = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addBookToCollection();
+    updateCollectionEntry();
   }
 
   const fetchBook = async (id) => {
@@ -39,7 +39,7 @@ const AddBook = () => {
     }
   }
 
-  const addBookToCollection = async () => {
+  const updateCollectionEntry = async () => {
     console.log(URL_COLLECTION_SVC);
     await axios.post(`${URL_COLLECTION_SVC}/${user_id}/${book_id}`, {
       user_id: user_id,
@@ -47,7 +47,7 @@ const AddBook = () => {
       price: price,
       note: note,
     }).catch((err) => console.log(err.response));
-    alert('Book added to collection.');
+    alert('Book entry updated in collection.');
   }
 
   useEffect(() => {
