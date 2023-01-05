@@ -35,7 +35,6 @@ const ViewCollection = () => {
   }
 
   useEffect(() => {
-    // eslint-disable-next-line
     fetchCollection(user_id);
     // eslint-disable-next-line
   }, [user_id, JSON.stringify(collection)])

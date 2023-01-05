@@ -1,6 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import { addBookToCollection, getBooksFromCollection, getCollection } from './database.js';
+import {
+  addBookToCollection,
+  getBookFromCollection,
+  getBooksFromCollection,
+} from './database.js';
 
 const app = express();
 
@@ -15,6 +19,12 @@ app.get('/collection/:user_id', async (req, res) => {
   const user_id = req.params.user_id;
   const entries = await getBooksFromCollection(user_id);
   res.json(entries);
+});
+
+app.get('/collection/:user_id/:book_id', async (req, res) => {
+  const { user_id, book_id } = req.params;
+  const entry = await getBookFromCollection(user_id, book_id);
+  res.status(201).send(entry);
 });
 
 app.post('/collection/:user_id/:book_id', async (req, res) => {

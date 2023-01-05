@@ -42,6 +42,20 @@ export async function getBooksFromCollection(user_id) {
   return entries;
 }
 
+export async function getBookFromCollection(user_id, book_id) {
+  let collection = await getCollection(user_id);
+  if (!collection[0]) {
+    return null;
+  }
+  const collection_id = collection[1];
+  const [entry] = await pool.query(`
+  SELECT *
+  FROM collection_books
+  WHERE collection_id = ? AND book_id = ?
+  `, [collection_id, book_id]);
+  return entry;
+}
+
 export async function addBookToCollection(user_id, book_id, price, note) {
   let collection = await getCollection(user_id);
   if (!collection[0]) {
