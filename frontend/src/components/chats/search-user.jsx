@@ -85,11 +85,11 @@ function SearchUser() {
         alignItems='center'
         bgcolor='white'
         width='100%'
-        p='5px 10px 5px 10px'
+        p='5px'
       >
-        <Button variant='ghost' onClick={toggleDrawer(true)}>
+        <Button variant='ghost' sx={{ width: '100%' }} onClick={toggleDrawer(true)}>
           <SearchIcon />
-          <Typography px={4}>
+          <Typography px={1}>
             Search Users
           </Typography>
         </Button>
@@ -101,7 +101,8 @@ function SearchUser() {
         onClose={toggleDrawer(false)}
       >
         <Box
-          sx={{ width: 'auto', margin: '10px' }}
+          sx={{ width: '100%', margin: '10px' }}
+          height='100%'
           role='presentation'
         >
           <Typography variant='body1'>
@@ -117,6 +118,7 @@ function SearchUser() {
             <Button onClick={handleSearch}>Go</Button>
           </Box>
           <Box
+            height='80%'
             onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
           >

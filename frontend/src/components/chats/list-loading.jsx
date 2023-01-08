@@ -3,19 +3,13 @@ import React from 'react';
 
 function ListLoading() {
   return (
-    <Stack>
-      <Skeleton height='45px' />
-      <Skeleton height='45px' />
-      <Skeleton height='45px' />
-      <Skeleton height='45px' />
-      <Skeleton height='45px' />
-      <Skeleton height='45px' />
-      <Skeleton height='45px' />
-      <Skeleton height='45px' />
-      <Skeleton height='45px' />
-      <Skeleton height='45px' />
-      <Skeleton height='45px' />
-      <Skeleton height='45px' />
+    <Stack width='80%' height='100%'>
+      <Skeleton width='100%' height='25%' />
+      <Skeleton width='100%' height='25%' />
+      <Skeleton width='100%' height='25%' />
+      <Skeleton width='100%' height='25%' />
+      <Skeleton width='100%' height='25%' />
+      <Skeleton width='100%' height='25%' />
     </Stack>
   )
 }

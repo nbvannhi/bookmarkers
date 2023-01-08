@@ -36,7 +36,9 @@ function ChatList({ fetchAgain, setFetchAgain }) {
       display={{ base: selectedChat ? 'none' : 'flex', md: 'flex' }}
       flexDirection='column'
       alignItems='center'
-      p={3}
+      px={3}
+      pt={1}
+      pb={2}
       bgcolor='white'
       width='100%'
       borderRadius='lg'
