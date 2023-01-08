@@ -12,7 +12,7 @@ server.use(cookieParser());
 server.use(express.json());
 server.use('/api', router);
 
-mongoose.set('strictQuery', true);
+mongoose.set('strictQuery', false);
 mongoose.connect(`mongodb+srv://admin:${process.env.MONGODB_PASSWORD}@cluster0.zfdlc1j.mongodb.net/bookmarkers-users?retryWrites=true&w=majority`)
   .then(() => {
     server.listen(5000);

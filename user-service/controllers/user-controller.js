@@ -48,7 +48,7 @@ const signIn = async (req, res) => {
   try {
     existingUser = await User.findOne({ email: email });
   } catch (err) {
-    return new Error(err);
+    console.error(err);
   }
   if (!existingUser) {
     return res.status(400).json({ message: 'User not found. Sign up please.' });
@@ -103,7 +103,7 @@ const getUser = async (req, res) => {
   try {
     user = await User.findById(userId, '-password');
   } catch (err) {
-    return new Error(error);
+    console.error(err);
   }
   if (!user) {
     return res.status(404).json({ message: 'User not found.' });
@@ -136,7 +136,7 @@ const getUserById = async (req, res) => {
   try {
     user = await User.findById(userId, '-password');
   } catch (err) {
-    return new Error(error);
+    console.error(err);
   }
   if (!user) {
     return res.status(404).json({ message: 'User not found.' });
@@ -215,10 +215,30 @@ const signOut = (req, res) => {
   });
 };
 
+// @description get or search all users
+// @route GET /api/users/:id?search=
+const searchUsers = async (req, res) => {
+  const userId = req.params.id;
+
+  const query = req.query.search
+    ? {
+      $and: [
+        { username: { $regex: req.query.search, $options: 'i' } },
+        { _id: { $ne: userId } }
+      ],
+    }
+    : {};
+
+  const users = await User.find(query, '-password');
+
+  return res.send(users);
+};
+
 exports.signUp = signUp;
 exports.signIn = signIn;
 exports.verifyToken = verifyToken;
 exports.getUser = getUser;
 exports.getUserById = getUserById;
+exports.searchUsers = searchUsers;
 exports.refreshToken = refreshToken;
 exports.signOut = signOut;
