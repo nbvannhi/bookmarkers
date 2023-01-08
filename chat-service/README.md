@@ -57,7 +57,7 @@ Sign in to or install Postman from [here](https://www.postman.com/). Open Postma
 (More detailed instructions will be provided in the future)
 
 ## Credits
-There is extensive code reuse in `frontend/` and `chat-service/` from: <br>
+There is some code reuse and a lot of inspired code in `frontend/` and `chat-service/` from: <br>
 > Title: mern-chat-app <br>
 Author: Piyush Agarwal <br>
 Date: 2021 <br>
