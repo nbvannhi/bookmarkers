@@ -10,15 +10,16 @@ import {
 const ViewAllBooks = () => {
   const [books, setBooks] = useState([]);
 
-  useEffect(() => {
-    const fetchBooks = async () => {
-      try {
-        const res = await axios.get(URL_BOOK_SVC);
-        setBooks(res.data);
-      } catch (err) {
-        console.log(err);
-      }
+  const fetchBooks = async () => {
+    try {
+      const res = await axios.get(URL_BOOK_SVC);
+      setBooks(res.data);
+    } catch (err) {
+      console.log(err);
     }
+  };
+
+  useEffect(() => {
     fetchBooks();
   }, []);
 

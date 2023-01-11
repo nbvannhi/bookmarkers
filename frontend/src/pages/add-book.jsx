@@ -20,16 +20,16 @@ const AddBook = () => {
 
   const handlePriceChange = (e) => {
     setPrice(e.target.value);
-  }
+  };
 
   const handleNoteChange = (e) => {
     setNote(e.target.value);
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     updateCollectionEntry();
-  }
+  };
 
   const fetchBook = async (id) => {
     try {
@@ -38,7 +38,7 @@ const AddBook = () => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   const updateCollectionEntry = async () => {
     console.log(URL_COLLECTION_SVC);
@@ -50,7 +50,7 @@ const AddBook = () => {
     }).catch((err) => console.log(err.response));
     alert('Book entry updated in collection.');
     navigate(`/books/${book_id}`, { replace: true });
-  }
+  };
 
   useEffect(() => {
     fetchBook(book_id);

@@ -20,7 +20,7 @@ const ViewCollection = () => {
   } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   const fetchBooks = async (collection) => {
     try {
@@ -32,7 +32,7 @@ const ViewCollection = () => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   useEffect(() => {
     fetchCollection(user_id);

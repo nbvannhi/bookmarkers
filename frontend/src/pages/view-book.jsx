@@ -23,7 +23,7 @@ const ViewBook = () => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   const fetchEntry = async (id) => {
     try {
@@ -35,7 +35,7 @@ const ViewBook = () => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   useEffect(() => {
     fetchBook(book_id);
