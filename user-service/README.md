@@ -1,7 +1,7 @@
 # User Service
 
 ## Downloading `.env` file
-Download `user-service.env` file from [here](https://drive.google.com/drive/folders/1qzkw99cqAebqCf2l7eVWQsuqJ2xvb1J?usp=share_link), rename it to `.env` and place inside `user-service/`.
+Download `user-service.env` file from [here](https://drive.google.com/drive/folders/1qzkw99cqAQebqCf2l7eVWQsuqJ2xvb1J?usp=sharing), rename it to `.env` and place inside `user-service/`.
 
 ## Running User Service
 Change the directory to `user-service` using:
@@ -16,12 +16,18 @@ $ npm i
 
 Run the server using:
 ```
-$ npm start
+$ npm run dev
 ```
 
 The terminal should show:
 ```
-[nodemon] restarting due to changes...
+> user-service@1.0.0 dev
+> nodemon server
+
+[nodemon] 2.0.20
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,json
 [nodemon] starting `node server.js`
 user-service listening on port 5000
 ```
@@ -44,7 +50,7 @@ Run the server using:
 $ npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in a browser and test with the urls [\signup](http://localhost:3000\signup), [\signin](http://localhost:3000\signin)
+Open [http://localhost:3000](http://localhost:3000) in a browser and test with the urls [\signup](http://localhost:3000\signup), [\signin](http://localhost:3000\signin).
 
 ### 2. With Postman:
 Sign in to or install Postman from [here](https://www.postman.com/). Open Postman and send some HTTP requests to test the User Service APIs.

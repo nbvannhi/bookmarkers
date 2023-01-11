@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import ChatProvider from './context/chat-provider';
 import './style.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -12,7 +13,9 @@ root.render(
   <BrowserRouter>
     <React.StrictMode>
       <Provider store={store}>
-        <App />
+        <ChatProvider>
+          <App />
+        </ChatProvider>
       </Provider>
     </React.StrictMode>
   </BrowserRouter>

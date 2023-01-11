@@ -13,13 +13,18 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const PUBLIC_PAGES = ['Search', 'Menu2', 'Menu3'];
-const PRIVATE_PAGES = ['Collection', 'Menu2', 'Menu3'];
+const PRIVATE_PAGES = ['Collection', 'Chats', 'Menu3'];
+const PUBLIC_LINKS = ['', '', ''];
+const PRIVATE_LINKS = ['', '/chats', ''];
 
 function NavBar() {
   const isSignedIn = useSelector((state) => state.isSignedIn) || localStorage.getItem('userId') != null;
   const pages = isSignedIn ? PRIVATE_PAGES : PUBLIC_PAGES;
+  const links = isSignedIn ? PRIVATE_LINKS : PUBLIC_LINKS;
+  const navigate = useNavigate();
 
   const [anchorElNav, setAnchorElNav] = useState(null);
 
@@ -88,8 +93,8 @@ function NavBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+              {pages.map((page, index) => (
+                <MenuItem key={page} onClick={() => navigate(links[index])}>
                   <Typography textAlign='center'>{page}</Typography>
                 </MenuItem>
               ))}
@@ -115,10 +120,10 @@ function NavBar() {
             Bookmarkers
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {pages.map((page, index) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => navigate(links[index])}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
