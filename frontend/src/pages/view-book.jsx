@@ -116,7 +116,7 @@ const ViewBook = () => {
       <Button
         variant='contained'
         disableElevation
-        href={`http://localhost:3000/collection/${user_id}/${book_id}`}
+        href={`http://localhost:3000/collection/${book_id}`}
         sx={{
           width: 'fit-content',
           alignSelf: 'center',

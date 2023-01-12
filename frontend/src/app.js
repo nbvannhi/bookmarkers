@@ -23,8 +23,8 @@ function App() {
           <Route path='/books' element={<ViewAllBooks />} />
           <Route path='/books/:book_id' element={<ViewBook />} />
           { /* protected routes*/}
-          {isSignedIn && <Route path='/collection/:user_id' element={<ViewCollection />} />}{' '}
-          {isSignedIn && <Route path='/collection/:user_id/:book_id' element={<AddBook />} />}{' '}        
+          {isSignedIn && <Route path='/collection' element={<ViewCollection />} />}{' '}
+          {isSignedIn && <Route path='/collection/:book_id' element={<AddBook />} />}{' '}        
           {isSignedIn && <Route path='/user' element={<User />} />}{' '}
           {isSignedIn && <Route path='/chats' element={<ViewAllChats />} />}{' '}
         </Routes>
