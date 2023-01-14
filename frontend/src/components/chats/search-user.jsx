@@ -64,8 +64,9 @@ function SearchUser() {
       const res = await axiosChat.post('/chats', { user: user.username, other: other }, config);
       const data = res.data;
 
-      const isChatCreated = chats.find((c) => c.id === data._id);
-      if (!isChatCreated) {
+      const isChatExist = chats.find((c) => c._id === data._id);
+
+      if (!isChatExist) {
         setChats([data, ...chats]);
       }
       setSelectedChat(data);
