@@ -7,13 +7,11 @@ import {
   Typography
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import animationData from '../../animation/typing.json';
 import { ChatState } from '../../context/chat-provider';
 import axios from '../../utils/chat-axios';
 import { getChatUsername } from '../../utils/chat-utils';
 import ScrollableChat from './scrollable-chat';
 import React, { useEffect, useState } from 'react';
-import Lottie from 'lottie-react';
 
 import io from 'socket.io-client';
 
@@ -26,17 +24,9 @@ function Chat({ fetchAgain, setFetchAgain }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSocketConnected, setIsSocketConnected] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [typer, setTyper] = useState('');
 
   const { selectedChat, setSelectedChat, user, notification, setNotification } = ChatState();
-
-  const typingAnimationOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice',
-    },
-  };
 
   const getChatMessages = async () => {
     if (!selectedChat) {
@@ -90,6 +80,9 @@ function Chat({ fetchAgain, setFetchAgain }) {
   };
 
   const typingHandler = (event) => {
+    const room = selectedChat._id;
+    const username = user.username;
+
     setNewMessage(event.target.value);
 
     if (!isSocketConnected) {
@@ -97,7 +90,8 @@ function Chat({ fetchAgain, setFetchAgain }) {
     }
 
     if (!isTyping) {
-      socket.emit('typing', selectedChat._id);
+      setIsTyping(true);
+      socket.emit('typing', room, username);
     }
 
     const lastTypingTime = new Date().getTime();
@@ -107,7 +101,8 @@ function Chat({ fetchAgain, setFetchAgain }) {
       const currTime = new Date().getTime();
       const timeDiff = currTime - lastTypingTime;
       if (timeDiff >= interval && isTyping) {
-        socket.emit('stop typing', selectedChat._id);
+        setIsTyping(false);
+        socket.emit('stop typing', room);
       }
     }, interval);
   };
@@ -116,8 +111,8 @@ function Chat({ fetchAgain, setFetchAgain }) {
     socket = io(SERVER);
     socket.emit('setup', user.username);
     socket.on('connected', () => setIsSocketConnected(true));
-    socket.on('typing', () => setIsTyping(true));
-    socket.on('stop typing', () => setIsTyping(false));
+    socket.on('typing', (user) => setTyper(user));
+    socket.on('stop typing', () => setTyper(''));
   }, []);
 
   useEffect(() => {
@@ -144,41 +139,63 @@ function Chat({ fetchAgain, setFetchAgain }) {
         selectedChat
           ? (
             <>
-              <Typography
-                fontSize={{ base: '28px', md: '30px' }}
-                pb={3}
-                px={2}
+              <Box
                 width='100%'
-                fontFamily='Work sans'
                 display='flex'
-                justifyContent={{ base: 'space-between' }}
+                flexDirection='row'
+                justifyContent='flex-start'
+                marginBottom={3}
                 alignItems='center'
               >
                 <IconButton
-                  display={{ base: 'flex', md: 'none' }}
                   onClick={() => setSelectedChat('')}
                 >
                   <ArrowBackIcon />
                 </IconButton>
-                {
-                  messages &&
-                  (
-                    selectedChat.isGroupChat
-                      ? (
-                        <>
-                          {selectedChat.chatName}
-                          { /* TODO: add UpdateGroupChatModal */}
-                        </>
+                <Box
+                  display='flex'
+                  flexDirection='column'
+                  paddingLeft={2}
+                  paddingBottom={1}
+                  alignItems='flex-start'
+                >
+                  <Typography
+                    fontSize='30px'
+                    fontFamily='Work sans'
+                  >
+                    {
+                      messages &&
+                      (
+                        selectedChat.isGroupChat
+                          ? (
+                            <>
+                              {selectedChat.chatName}
+                              { /* TODO: add UpdateGroupChatModal */}
+                            </>
+                          )
+                          : (
+                            <>
+                              {getChatUsername(user.username, selectedChat.users)}
+                              { /* TODO: add ProfileModal */}
+                            </>
+                          )
                       )
-                      : (
-                        <>
-                          {getChatUsername(user.username, selectedChat.users)}
-                          { /* TODO: add ProfileModal */}
-                        </>
-                      )
-                  )
-                }
-              </Typography>
+                    }
+                  </Typography>
+
+                  <Typography
+                    fontSize='15px'
+                    fontFamily='Work sans'
+                  >
+                    {
+                      typer !== ''
+                        ? `${typer} is typing...`
+                        : '-'
+                    }
+                  </Typography>
+                </Box>
+              </Box>
+
               <Box
                 display='flex'
                 flexDirection='column'
@@ -209,17 +226,6 @@ function Chat({ fetchAgain, setFetchAgain }) {
                   mt={3}
                   position='fixed'
                 >
-                  {
-                    isTyping && (
-                      <div>
-                        <Lottie
-                          options={typingAnimationOptions}
-                          width={70}
-                          style={{ marginBottom: 15, marginLeft: 0 }}
-                        />
-                      </div>
-                    )
-                  }
                   <Input
                     variant='filled'
                     bgcolor='#E0E0E0'
