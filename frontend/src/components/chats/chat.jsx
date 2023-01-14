@@ -29,7 +29,7 @@ function Chat({ fetchAgain, setFetchAgain }) {
 
   const { selectedChat, setSelectedChat, user, notification, setNotification } = ChatState();
 
-  const defaultOptions = {
+  const typingAnimationOptions = {
     loop: true,
     autoplay: true,
     animationData: animationData,
@@ -213,7 +213,7 @@ function Chat({ fetchAgain, setFetchAgain }) {
                     isTyping && (
                       <div>
                         <Lottie
-                          options={defaultOptions}
+                          options={typingAnimationOptions}
                           width={70}
                           style={{ marginBottom: 15, marginLeft: 0 }}
                         />

@@ -2,7 +2,7 @@ import { Box, Divider, Stack, Typography } from '@mui/material';
 import axios from '../../utils/chat-axios';
 import { ChatState } from '../../context/chat-provider';
 import ListLoading from './list-loading';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { getChatUsername } from '../../utils/chat-utils';
 
 const CHAT_BG = '#E8E8E8';
