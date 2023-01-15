@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { URL_BOOK_SVC } from '../configs.js';
-import Box from '@mui/material/Box';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
+import {
+  Box,
+  ImageList,
+  ImageListItem,
+} from '@mui/material';
 
 const ViewAllBooks = () => {
   const [books, setBooks] = useState([]);
 
-  useEffect(() => {
-    const fetchBooks = async () => {
-      try {
-        const res = await axios.get(URL_BOOK_SVC);
-        setBooks(res.data);
-      } catch (err) {
-        console.log(err);
-      }
+  const fetchBooks = async () => {
+    try {
+      const res = await axios.get(URL_BOOK_SVC);
+      setBooks(res.data);
+    } catch (err) {
+      console.log(err);
     }
+  };
+
+  useEffect(() => {
     fetchBooks();
   }, []);
 

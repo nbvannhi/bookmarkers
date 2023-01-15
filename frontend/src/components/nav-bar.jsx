@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 const PUBLIC_PAGES = ['Search', 'Menu2', 'Menu3'];
 const PRIVATE_PAGES = ['Collection', 'Chats', 'Menu3'];
 const PUBLIC_LINKS = ['', '', ''];
-const PRIVATE_LINKS = ['', '/chats', ''];
+const PRIVATE_LINKS = ['/collection', '/chats', ''];
 
 function NavBar() {
   const isSignedIn = useSelector((state) => state.isSignedIn) || localStorage.getItem('userId') != null;
