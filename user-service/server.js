@@ -7,7 +7,7 @@ require('dotenv').config();
 
 const server = express();
 
-server.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+server.use(cors({ credentials: true, origin: process.env.CLIENT_URL }));
 server.use(cookieParser());
 server.use(express.json());
 server.use('/api', router);
@@ -15,7 +15,7 @@ server.use('/api', router);
 mongoose.set('strictQuery', false);
 mongoose.connect(`mongodb+srv://admin:${process.env.MONGODB_PASSWORD}@cluster0.zfdlc1j.mongodb.net/bookmarkers-users?retryWrites=true&w=majority`)
   .then(() => {
-    server.listen(5000);
+    server.listen(process.env.SERVER_PORT);
     console.log('user-service listening on port 5000');
   })
   .catch((err) => console.log(err));
