@@ -7,9 +7,9 @@ function VerifySuccess() {
 
   return (
     <Box marginTop={10}>
-      <h1>Your account has been set up successfully! Click the button below to sign in:</h1>
+      <h3>Your account has been set up successfully! Click the button below to sign in.</h3>
       <Button
-        onClick={() => navigate('./signin')}
+        onClick={() => navigate('/signin')}
         variant='contained'
       >
         Sign in
