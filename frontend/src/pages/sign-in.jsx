@@ -27,16 +27,24 @@ function SignIn() {
       password: inputs.password,
     }).catch((err) => console.error(err.response));
     const data = await res.data;
-    const userId = data.user._id;
+    const user = data.user;
 
-    await dispatch(authActions.signIn());
-    localStorage.setItem('userId', String(userId));
+    if (user.verified) {
+      dispatch(authActions.signIn());
+      localStorage.setItem('userId', String(user._id));
+      return true;
+    } else {
+      return false;
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     sendRequest()
-      .then(() => navigate('/user'));
+      .then((isVerified) => {
+        const to = isVerified ? '/user' : '/verifyemail';
+        navigate(to);
+      });
   };
 
 

@@ -28,7 +28,7 @@ function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    sendRequest().then(() => navigate('/signin'));
+    sendRequest().then(() => navigate('/verifyemail'));
   };
 
   return (
