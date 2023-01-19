@@ -42,7 +42,7 @@ const signUp = async (req, res) => {
     service: 'gmail',
     auth: {
       type: 'OAuth2',
-      user: process.env.ADMIN_EMAIL,
+      user: process.env.NO_REPLY_EMAIL,
       pass: process.env.ADMIN_PASSWORD,
       clientId: process.env.OAUTH_CLIENT_ID,
       clientSecret: process.env.OAUTH_CLIENT_SECRET,
@@ -57,7 +57,7 @@ const signUp = async (req, res) => {
   const emailBody = `<p>Please click <a href='${url}'>here</a> to verify your email and complete your sign-up for Bookmarkers. The link will expire after 24 hours.</p>`
 
   const emailOptions = {
-    from: process.env.ADMIN_EMAIL,
+    from: process.env.NO_REPLY_EMAIL,
     to: email,
     subject: EMAIL_VERIFICATION_SUBJECT,
     html: emailBody,
@@ -79,7 +79,9 @@ const signUp = async (req, res) => {
         message: `An email was sent to ${email} at ${time}. Please check your email for verification.`,
       });
     } else {
-      User.deleteOne({ _id: user.id });
+      console.error(err);
+      console.log(user._id);
+      User.deleteOne({ _id: user._id });
       return res.status(403).json({
         message: `Unable to send email to ${email}.`,
       });
