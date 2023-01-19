@@ -1,11 +1,13 @@
 const User = require('../model/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 
 const SIGN_IN_TOKEN_TIMEOUT = '35s';
 const SIGN_IN_COOKIE_TIMEOUT = 1000 * 30;
 const REFRESH_TOKEN_TIMEOUT = '3h';
 const REFRESH_COOKIE_TIMEOUT = 1000 * 60 * 60 * 3;
+const EMAIL_VERIFICATION_SUBJECT = 'Verify your Bookmarkers account';
 
 const signUp = async (req, res) => {
   const { username, email, password } = req.body;
@@ -26,20 +28,82 @@ const signUp = async (req, res) => {
   }
 
   const hashedPassword = bcrypt.hashSync(password);
-  const user = new User({
+  const user = await User.create({
     username: username,
     email: email,
     password: hashedPassword,
   });
 
-  try {
-    await user.save();
-  } catch (err) {
-    console.log(err);
+  if (!user) {
+    return res.status(403);
   }
 
-  return res.status(201).json({ message: user });
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      type: 'OAuth2',
+      user: process.env.NO_REPLY_EMAIL,
+      pass: process.env.ADMIN_PASSWORD,
+      clientId: process.env.OAUTH_CLIENT_ID,
+      clientSecret: process.env.OAUTH_CLIENT_SECRET,
+      refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+    }
+  });
+
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' });
+
+  const url = `${process.env.SERVER_URL}/api/verifyemail/${token}`;
+
+  const emailBody = `<p>Please click <a href='${url}'>here</a> to verify your email and complete your sign-up for Bookmarkers. The link will expire after 24 hours.</p>`
+
+  const emailOptions = {
+    from: process.env.NO_REPLY_EMAIL,
+    to: email,
+    subject: EMAIL_VERIFICATION_SUBJECT,
+    html: emailBody,
+  };
+
+  transporter.sendMail(emailOptions, (err, data) => {
+    if (!err) {
+      const time = new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true,
+      }).format(new Date());
+
+      return res.status(201).json({
+        message: `An email was sent to ${email} at ${time}. Please check your email for verification.`,
+      });
+    } else {
+      console.error(err);
+      console.log(user._id);
+      User.deleteOne({ _id: user._id });
+      return res.status(403).json({
+        message: `Unable to send email to ${email}.`,
+      });
+    }
+  });
 };
+
+const verifyEmail = async (req, res) => {
+  const { id } = jwt.verify(req.params.token, process.env.JWT_SECRET_KEY);
+
+  if (!id) {
+    return res.status(404).json({ message: 'User not found.' });
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(id, { verified: true });
+
+  if (!updatedUser) {
+    return res.status(404).json('Unable to verify user.');
+  }
+
+  return res.redirect(`${process.env.CLIENT_VERIFY_SUCCESS_URL}`)
+}
 
 const signIn = async (req, res) => {
   const { email, password } = req.body;
@@ -53,6 +117,11 @@ const signIn = async (req, res) => {
   if (!existingUser) {
     return res.status(400).json({ message: 'User not found. Sign up please.' });
   }
+
+  /*
+  if (!existingUser.verified) {
+    return res.status(401).json({ message: 'User has not been verified.' });
+  } */
 
   const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
   if (!isPasswordCorrect) {
@@ -235,6 +304,7 @@ const searchUsers = async (req, res) => {
 };
 
 exports.signUp = signUp;
+exports.verifyEmail = verifyEmail;
 exports.signIn = signIn;
 exports.verifyToken = verifyToken;
 exports.getUser = getUser;
