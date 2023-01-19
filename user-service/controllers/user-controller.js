@@ -28,7 +28,7 @@ const signUp = async (req, res) => {
   }
 
   const hashedPassword = bcrypt.hashSync(password);
-  const user = new User({
+  const user = await User.create({
     username: username,
     email: email,
     password: hashedPassword,
@@ -37,6 +37,7 @@ const signUp = async (req, res) => {
   if (!user) {
     return res.status(403);
   }
+
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -49,7 +50,7 @@ const signUp = async (req, res) => {
     }
   });
 
-  const token = jwt.sign({ id: user._id }, proces.env.JWT_SECRET_KEY, { expiresIn: '1d' });
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' });
 
   const url = `${process.env.SERVER_URL}/api/verifyemail/${token}`;
 
@@ -62,7 +63,7 @@ const signUp = async (req, res) => {
     html: emailBody,
   };
 
-  await transporter.sendMail(emailOptions, (err, data) => {
+  transporter.sendMail(emailOptions, (err, data) => {
     if (!err) {
       const time = new Intl.DateTimeFormat('en-US', {
         year: 'numeric',
@@ -78,6 +79,7 @@ const signUp = async (req, res) => {
         message: `An email was sent to ${email} at ${time}. Please check your email for verification.`,
       });
     } else {
+      User.deleteOne({ _id: user.id });
       return res.status(403).json({
         message: `Unable to send email to ${email}.`,
       });
@@ -113,6 +115,11 @@ const signIn = async (req, res) => {
   if (!existingUser) {
     return res.status(400).json({ message: 'User not found. Sign up please.' });
   }
+
+  /*
+  if (!existingUser.verified) {
+    return res.status(401).json({ message: 'User has not been verified.' });
+  } */
 
   const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
   if (!isPasswordCorrect) {
